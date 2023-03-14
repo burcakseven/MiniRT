@@ -4,7 +4,8 @@
 
 int main(int ac, char **av) {
 
-    t_frame_1920x1080 frame;
-    
+    (void) ac;
+    (void) av;
+    write(1,"UNDER CONSTRUCTION\n",19);
     return (0);
 }
