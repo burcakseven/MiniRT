@@ -2,7 +2,9 @@
 # define FRAME_H
 
 struct s_frame_1920x1080 {
-    int frame[1080][1920];
+    int canvas[1080][1920];
+    void *mlx;
+    void *win;
 };
 
 typedef struct s_frame_1920x1080 t_frame_1920x1080;

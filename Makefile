@@ -22,7 +22,7 @@ OBJECTS		= $(addprefix $(OBJ_FOLD), $(APP_OBJ))
 LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(SRC_FOLD))
 
 $(NAME): $(DEPENDENTS) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) -framework OpenGL -framework AppKit -o $(NAME)
 
 all: $(NAME)
 
