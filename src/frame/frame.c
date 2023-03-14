@@ -1,10 +1,11 @@
 #include "frame.h"
 #include <unistd.h>
 #include <mlx.h>
-
+#include <stdio.h>
 static t_frame_1920x1080	*frame_1920x1080(void)
 {
 	static t_frame_1920x1080	frame;
+	
 	if (frame.mlx == NULL)
 	{
 		frame.mlx = mlx_init();

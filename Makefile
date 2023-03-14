@@ -1,7 +1,7 @@
 NAME		= minirt
 
 CC			= gcc
-CFLAGS		:= -Wall -Werror -Wextra
+CFLAGS		:= -Wall -Werror -Wextra -g
 
 SRC_FOLD	= src/
 LIB_FOLD	= libs/
@@ -27,7 +27,8 @@ $(NAME): $(DEPENDENTS) $(OBJECTS)
 all: $(NAME)
 
 $(OBJ_FOLD)%.o : $(SRC_FOLD)%.c
-	@[ ! -d "$(dir $@)" ] && mkdir -p $(dir $@)
+	@echo generating object: $@	
+	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	@$(CC) $(CFLAGS) $(LFLAGS) -c $< -o $@ 
 
 $(LIB_FOLD)% :
