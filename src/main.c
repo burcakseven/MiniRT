@@ -33,7 +33,6 @@ int main(int ac, char **av) {
         }
     }
     printf("DERT TASA\n");
-    (void) frame;
     print_frame();
     mlx_loop(frame.mlx);
     return (0);
