@@ -5,12 +5,6 @@
 static t_frame_1920x1080	*frame_1920x1080(void)
 {
 	static t_frame_1920x1080	frame;
-	
-	if (frame.mlx == NULL)
-	{
-		frame.mlx = mlx_init();
-		frame.win = mlx_new_window(frame.mlx, 1920, 1080, "");
-	}
 
 	return &frame;
 }

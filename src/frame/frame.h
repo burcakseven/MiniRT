@@ -1,10 +1,11 @@
 #ifndef FRAME_H
 # define FRAME_H
 
-struct s_frame_1920x1080 {
-    int canvas[1080][1920];
-    void *mlx;
-    void *win;
+# define WIDTH		1920
+# define HEIGHT		1080
+
+struct s_frame {
+    void *img;
 };
 
 typedef struct s_frame_1920x1080 t_frame_1920x1080;

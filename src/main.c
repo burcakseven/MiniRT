@@ -5,15 +5,24 @@
 
 void print_frame(){
 
-    t_frame_1920x1080 frame;
+    void *mlx;
+    void *win;
 
-    frame = get_frame_1920x1080();
+    mlx = mlx_init();
+	win = mlx_new_window(mlx, 1920, 1080, "");
+
+    //t_frame_1920x1080 frame;
+
+    //frame = get_frame_1920x1080();
+
 
     for(int i = 0; i < 1080; i++){
         for (int j = 0; j < 1920; j++){
-            mlx_pixel_put(frame.mlx, frame.win, i,j,frame.canvas[i][j]);
+            //mlx_pixel_put(mlx, win, i,j,frame.canvas[i][j]);
         }
     }
+
+    mlx_loop(mlx);
 }
 
 int main(int ac, char **av) {
@@ -34,6 +43,5 @@ int main(int ac, char **av) {
     }
     printf("DERT TASA\n");
     print_frame();
-    mlx_loop(frame.mlx);
     return (0);
 }

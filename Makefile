@@ -40,7 +40,7 @@ FLAG_LINUX	= -lXext -lX11 -lm -lz
 FLAG_MACOS	= -framework OpenGL -framework AppKit
 
 $(NAME): $(DEPENDENTS) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) $(FLAG_LINUX) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) $(FLAG_MACOS) -o $(NAME)
 
 all: $(NAME)
 
