@@ -19,6 +19,8 @@ void	fill_data_operations(char *arg, t_scene *scene)
 	char	*file_name;
 
 	file_name = remove_first_last_spaces(arg);
+	if(!file_name)
+		ft_error();
 	name_control(file_name);
 	fd = open(file_name, O_RDONLY);
 	read_scene_data(scene,fd);

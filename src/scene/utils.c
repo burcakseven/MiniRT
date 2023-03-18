@@ -18,6 +18,8 @@ char	*remove_first_last_spaces(char	*str)
 		str[len - 1] = '\0';
 		len--;
 	}
+    if(*str == '\0')
+        return NULL;
 	return (str);
 }
 
@@ -37,14 +39,16 @@ int ft_compare(char *source1, char *source2)
 
 float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.22.4 gibi bir sayı olursa?
 {
-    float result = 0.0;
-    int sign = 1;
-    int i = 0;
-    while (**str == ' ')
-		(*str)++;
+    float result;
+    float sign;
+    int i;
+
+    result = 0.0;
+    sign = 1.0;
+    i = 0;
     if (**str == '-')
 	{
-        sign = -1;
+        sign = -1.0;
 		(*str)++;
 	}
     else if (**str == '+')
@@ -59,5 +63,35 @@ float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.2
         result = result * 10.0 + (float)(**str - '0');
         (*str)++;
     }
-    return sign * (result / (10 * i));
+    return (sign * (result / (float)pow(10,i)));
+}
+
+
+int fill_rgb(char **data)
+{
+	int i;
+	int j;
+	char *color_string;
+	int color;
+
+	color = 0;
+	i = 3;
+	color_string = malloc(sizeof(char)*i+1);
+	*(data) = remove_first_last_spaces(*data);
+	while (i--)
+	{
+		j = 0;
+		while (**data != '\0' && **data != ',' && **data != ' ')
+		{
+			color_string[j++] = **data;
+			(*data)++;
+		}
+		(*data)++;
+		color_string[j] = '\0';
+		if(color_string[0] == '\0')
+			ft_error();
+		color += ft_atoi(color_string) << (8*i);
+	}
+	free(color_string);
+	return color;
 }

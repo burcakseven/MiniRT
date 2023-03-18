@@ -5,6 +5,7 @@
 # include <fcntl.h>
 # include "../get_next_line/get_next_line.h"
 # include "../../libs/libft/libft.h"
+# include <math.h>
 
 typedef struct	s_ambient
 {
@@ -68,5 +69,5 @@ void read_scene_data(t_scene *scene, int fd);
 //utils
 int ft_compare(char *source1, char *source2);
 float ft_atof(char **str);
-
+int fill_rgb(char **data);
 #endif

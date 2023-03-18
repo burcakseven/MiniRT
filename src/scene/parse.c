@@ -1,47 +1,54 @@
 #include "scene.h"
 
-int fill_rgb(char **data)
-{
-	int i;
-	int j;
-	char *color_string;
-	int color;
-
-	color = 0;
-	i = 3;
-	color_string = malloc(sizeof(char)*i+1);
-	*(data) = remove_first_last_spaces(*data);
-	while (i--)
-	{
-		j = 0;
-		while (**data != '\0' && **data != ',' && **data != ' ')
-		{
-			color_string[j++] = **data;
-			(*data)++;
-		}
-		(*data)++;
-		color_string[j] = '\0';
-		if(color_string[0] == '\0')
-			ft_error();
-		color += ft_atoi(color_string) << (8*i);
-	}
-	free(color_string);
-	return color;
-}
-
-void ambient_lightning(t_ambient *ambient, char *data)
+void ambient_data(t_ambient *ambient, char *data)
 {
 	if(ambient->color)
 		ft_error();
 	ambient->color = fill_rgb(&data);
+	ambient->range = ft_atof(&data);
+	if(ambient->range < 0.0 || ambient->range > 1.0)
+		ft_error();
 }
 
-void choose_element(char *element, t_scene *scene, char *data)
+void fill_coordinate(char **data, float xyz[][3])
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+	{
+		*data = remove_first_last_spaces(*data);
+		if(data == NULL) //diğer datalar freelenmeli?
+			ft_error();
+		(*xyz)[i] = ft_atof(data);
+		(*data)++;
+		i++;
+	}
+}
+
+void camera_data(t_camera *camera, char *data)
+{
+	int i;
+
+	i = 3;
+	if(camera->coordinate[0])
+		ft_error();
+	fill_coordinate(&data, &(camera->coordinate));
+	fill_coordinate(&data,&(camera->v_orientation));
+
+	// while (i--)
+	// {
+	// 	if(camera->v_orientation[i] > 1 || camera->v_orientation[i] < -1)
+	// 		ft_error();
+	// }
+}
+
+void choose_element(char *element, t_scene *scene, char *data) // ilkinden sonra alfabetik harf içermeyecek kontrolü eklenecek
 {
 	if(ft_compare("A",element))
-		ambient_lightning(&(scene->ambient), data);
-	// else if (ft_strncmp("C",element,len))
-
+		ambient_data(&(scene->ambient), data);
+	else if (ft_compare("C",element))
+		camera_data(&(scene->camera),data);
 	// else if (ft_strncmp("L",element,len))
 
 	// else if(ft_strncmp("sp",element,len))
