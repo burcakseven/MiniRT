@@ -1,4 +1,4 @@
-#ifndef FRAME_H
+/*#ifndef FRAME_H
 # define FRAME_H
 
 # define WIDTH		1920
@@ -14,4 +14,4 @@ t_frame_1920x1080 get_frame_1920x1080();
 
 void frame_set_pixel(unsigned int row, unsigned int col, int val);
 
-#endif
+#endif*/

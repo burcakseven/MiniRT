@@ -1,7 +1,12 @@
-#ifndef SCENE_H
-#define SCENE_H
+# ifndef SCENE_H
+# define SCENE_H
 
-typedef struct	s_ambient {
+#include <stdio.h>
+#include "../get_next_line/get_next_line.h"
+#include "../../libs/libft/libft.h"
+
+typedef struct	s_ambient
+{
 	float	range; //value between [0 - 1]
 	int		color; //0xAABBCC
 }	t_ambient;
@@ -13,26 +18,29 @@ typedef struct s_camera {
 }	t_camera;
 
 typedef struct s_light {
-	float 	coordinate[3]; 
+	float	coordinate[3]; 
 	float	brightness; //value between [0 - 1]
 	int		color; //0xAABBCC
 }	t_light;
 
 
-typedef struct	s_sphere {
-	float 	coordinate[3];
+typedef struct	s_sphere
+{
+	float	coordinate[3];
 	float	diameter;
 	int		color;
 }	t_sphere;
 
-typedef struct	s_plane {
-	float 	coordinate[3];
+typedef struct	s_plane
+{
+	float	coordinate[3];
 	float 	v_normal[3]; // Yüzeye dik olan açı vektör (birim vektör)
 	int		color;
 }	t_plane;
 
-typedef struct	s_cylinder {
-	float 	coordinate[3];
+typedef struct	s_cylinder
+{
+	float	coordinate[3];
 	float 	v_axis[3]; // Yüzeye dik olan açı vektör (birim vektör)
 	float	height;
 	float	diameter;

@@ -1,4 +1,4 @@
-#include "frame.h"
+/*#include "frame.h"
 #include <unistd.h>
 #include <mlx.h>
 #include <stdio.h>
@@ -22,3 +22,4 @@ void frame_set_pixel(unsigned int row, unsigned int col, int val)
 
 	frame->canvas[row][col] = val;
 }
+*/
