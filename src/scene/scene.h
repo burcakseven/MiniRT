@@ -1,9 +1,10 @@
 # ifndef SCENE_H
 # define SCENE_H
 
-#include <stdio.h>
-#include "../get_next_line/get_next_line.h"
-#include "../../libs/libft/libft.h"
+# include <stdio.h>
+# include <fcntl.h>
+# include "../get_next_line/get_next_line.h"
+# include "../../libs/libft/libft.h"
 
 typedef struct	s_ambient
 {
@@ -22,7 +23,6 @@ typedef struct s_light {
 	float	brightness; //value between [0 - 1]
 	int		color; //0xAABBCC
 }	t_light;
-
 
 typedef struct	s_sphere
 {
