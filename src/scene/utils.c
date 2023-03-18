@@ -34,3 +34,30 @@ int ft_compare(char *source1, char *source2)
         return (1);
     return (0);
 }
+
+float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.22.4 gibi bir sayı olursa?
+{
+    float result = 0.0;
+    int sign = 1;
+    int i = 0;
+    while (**str == ' ')
+		(*str)++;
+    if (**str == '-')
+	{
+        sign = -1;
+		(*str)++;
+	}
+    else if (**str == '+')
+        (*str)++;
+    while (ft_isdigit(**str) || **str == '.')
+	{
+		if(**str == '.' || i != 0)
+		{
+			i++;
+			(*str)++;
+		}
+        result = result * 10.0 + (float)(**str - '0');
+        (*str)++;
+    }
+    return sign * (result / (10 * i));
+}

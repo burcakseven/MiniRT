@@ -67,5 +67,6 @@ void read_scene_data(t_scene *scene, int fd);
 
 //utils
 int ft_compare(char *source1, char *source2);
+float ft_atof(char **str);
 
 #endif

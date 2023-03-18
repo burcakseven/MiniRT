@@ -34,7 +34,6 @@ void ambient_lightning(t_ambient *ambient, char *data)
 	if(ambient->color)
 		ft_error();
 	ambient->color = fill_rgb(&data);
-
 }
 
 void choose_element(char *element, t_scene *scene, char *data)
