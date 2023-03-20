@@ -13,9 +13,9 @@ void	name_control(char *file_name)
 	ft_error();
 }
 
-void	fill_data_operations(char *arg, t_scene *scene)
+int control_file(char *arg)
 {
-	int		fd;
+    int		fd;
 	char	*file_name;
 
 	file_name = remove_first_last_spaces(arg);
@@ -25,15 +25,5 @@ void	fill_data_operations(char *arg, t_scene *scene)
 	fd = open(file_name, O_RDONLY);
 	if(fd < 0)
 		ft_error();
-	read_scene_data(scene,fd);
-}
-
-int	main(int ac, char **av)
-{
-	t_scene scene;
-	if (ac != 2)
-	{
-		ft_error();
-	}
-	fill_data_operations(av[1], &scene);
+    return fd;
 }

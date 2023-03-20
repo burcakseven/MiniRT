@@ -9,6 +9,7 @@
 
 typedef struct	s_ambient
 {
+
 	float	range; //value between [0 - 1]
 	int		color; //0xAABBCC
 }	t_ambient;
@@ -69,5 +70,11 @@ void read_scene_data(t_scene *scene, int fd);
 //utils
 int ft_compare(char *source1, char *source2);
 float ft_atof(char **str);
+int fill_rgb(char **data);
+
+//file_op
+int control_file(char *arg);
+
+//edit_line_utils.c
 int fill_rgb(char **data);
 #endif

@@ -1,41 +1,21 @@
 #include "scene.h"
 
-void ft_error()
+void fill_coordinate(char **data, float xyz[][3], float min, float max)
 {
-	printf("Error\n");
-	exit(1);
-}
+	int i;
 
-char	*remove_first_last_spaces(char	*str)
-{
-	int	len;
-    if(!str || *str == '\0')
-        return NULL;
-	while (*str == ' ')
-		str++;
-	len = ft_strlen(str);
-	while (len > 0 && str[len - 1] == ' ')
+	i = 0;
+	while (i < 3)
 	{
-		str[len - 1] = '\0';
-		len--;
+		*data = remove_first_last_spaces(*data);
+		if((*data) == NULL)
+			ft_error();
+		(*xyz)[i] = ft_atof(data);
+		if((*xyz)[i] < min || (*xyz)[i] > max)
+			ft_error();
+		(*data)++;
+		i++;
 	}
-    if(!str ||*str == '\0')
-        return NULL;
-	return (str);
-}
-
-int ft_compare(char *source1, char *source2)
-{
-    int len;
-    int temp;
-    len = ft_strlen(source1);
-    temp = ft_strlen(source2);
-
-    if(temp > len)
-        len = temp;
-    if(ft_strncmp(source1,source2,len) == 0)
-        return (1);
-    return (0);
 }
 
 float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.22.4 gibi bir sayı olursa?
@@ -73,6 +53,7 @@ int fill_rgb(char **data)
 	int j;
 	char *color_string;
 	int color;
+    int temp_color;
 
 	color = 0;
 	i = 3;
@@ -82,15 +63,13 @@ int fill_rgb(char **data)
 	{
 		j = 0;
 		while (**data != '\0' && **data != ',' && **data != ' ')
-		{
-			color_string[j++] = **data;
-			(*data)++; //if color_s[j-1] == '.' ret error eklenmesi gerekiyo
-		}
+			color_string[j++] = *(*data)++;
 		(*data)++;
 		color_string[j] = '\0';
-        if(color_string[0] == '\0')
-			    ft_error();
-		color += ft_atoi(color_string) << (8*i);
+        temp_color = ft_atoi(color_string);
+        if(color_string[0] == '\0' || temp_color > 255 || temp_color < 0)
+            ft_error();
+		color += temp_color << (8*i);
 	}
 	free(color_string);
 	return color;
