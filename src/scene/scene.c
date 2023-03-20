@@ -28,12 +28,12 @@ void	fill_data_operations(char *arg, t_scene *scene)
 	read_scene_data(scene,fd);
 }
 
-int	main(int ac, char **av)
-{
-	t_scene scene;
-	if (ac != 2)
-	{
-		ft_error();
-	}
-	fill_data_operations(av[1], &scene);
-}
+// int	main(int ac, char **av)
+// {
+// 	t_scene scene;
+// 	if (ac != 2)
+// 	{
+// 		ft_error();
+// 	}
+// 	fill_data_operations(av[1], &scene);
+// }

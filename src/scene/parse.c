@@ -10,7 +10,7 @@ void ambient_data(t_ambient *ambient, char *data)
 	ambient->color = fill_rgb(&data);
 }
 
-void fill_coordinate(char **data, float xyz[][3])
+void fill_coordinate(char **data, float xyz[][3], float min, float max)
 {
 	int i;
 
@@ -18,9 +18,11 @@ void fill_coordinate(char **data, float xyz[][3])
 	while (i < 3)
 	{
 		*data = remove_first_last_spaces(*data);
-		if((*data) == NULL) //diğer datalar freelenmeli?
+		if((*data) == NULL)
 			ft_error();
 		(*xyz)[i] = ft_atof(data);
+		if((*xyz)[i] < min || (*xyz)[i] > max)
+			ft_error();
 		(*data)++;
 		i++;
 	}
@@ -37,11 +39,6 @@ void camera_data(t_camera *camera, char *data)
 			ft_error();
 	camera->fov = ft_atof(&data);
 }
-
-// void light_data(t_light *light, char *data)
-// {
-// 	light
-// }
 
 void choose_element(char *element, t_scene *scene, char *data) // ilkinden sonra alfabetik harf içermeyecek kontrolü eklenecek
 {
@@ -62,22 +59,30 @@ void choose_element(char *element, t_scene *scene, char *data) // ilkinden sonra
 	// 	fr_error();
 }
 
-void process_line(t_scene *scene, char *data)
+char *pass_id(char *data)
 {
-	char	*element;
+	char	*id;
 	int		i;
 
 	i = 0;
-	element = malloc(ft_strlen(data)+1);
+	id = malloc(ft_strlen(data)+1);
+	while (*data != '\0' && *data != ' ')
+		id[i++] = *data++;
+	id[i] = '\0';
+	return id;
+}
+
+void process_line(t_scene *scene, char *data)
+{
+	char	*id;
+
 	data = remove_first_last_spaces(data);
 	if(!data)
 		ft_error();
-	while (*data != '\0' && *data != ' ')
-		element[i++] = *data++;
-	element[i] = '\0';
-	data += i;
-	choose_element(element, scene, data);
-	free(element);
+	id = pass_id(data);
+	data += ft_strlen(id);
+	choose_element(id, scene, data);
+	free(id);
 }
 
 void read_scene_data(t_scene *scene, int fd)
@@ -93,3 +98,6 @@ void read_scene_data(t_scene *scene, int fd)
         free(line);
     }
 }
+
+
+// scene/scene.c scene/parse.c scene/utils.c

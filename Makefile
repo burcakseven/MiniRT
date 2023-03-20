@@ -25,7 +25,8 @@ endif
 
 DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 
-APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c scene/scene.c scene/parse.c scene/utils.c
+APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
+scene2/file_op.c scene2/scene_parser.c scene2/scene.c scene2/utils.c scene2/edit_line_utils.c scene2/data_placement.c
 APP_OBJ		= $(APP_SRC:.c=.o)
 
 SOURCES		= $(addprefix $(SRC_FOLD), $(APP_SRC))

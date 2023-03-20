@@ -23,6 +23,7 @@ float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.2
     float result;
     float sign;
     int i;
+
     result = 0.0;
     sign = 1.0;
     i = 0;

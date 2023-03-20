@@ -7,6 +7,9 @@
 # include "../../libs/libft/libft.h"
 # include <math.h>
 
+# define MIN -2147483648
+# define MAX 2147483647
+
 typedef struct	s_ambient
 {
 
@@ -53,7 +56,9 @@ typedef struct s_scene {
 	t_ambient	ambient;
 	t_camera	camera;
 	t_light		light;
-	
+	t_sphere	*sphere;
+	t_plane		*plane;
+	t_cylinder	*cylinder;
 	/*
 
 		BURAYA BİR ŞEY LAZIM
@@ -77,4 +82,10 @@ int control_file(char *arg);
 
 //edit_line_utils.c
 int fill_rgb(char **data);
+void fill_coordinate(char **data, float xyz[][3], float min, float max);
+
+//data_placement
+void ambient_data(t_ambient *ambient, char *line);
+void camera_data(t_camera *camera, char *line);
+void light_data(t_light *light, char *line);
 #endif

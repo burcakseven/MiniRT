@@ -1,23 +1,22 @@
 #include "scene.h"
 
-// void choose_element(char *element, t_scene *scene, char *data) // ilkinden sonra alfabetik harf içermeyecek kontrolü eklenecek
-// {
-// 	//data harf içermeyecek kontrolü
-// 	if(ft_compare("A",element))
-// 		ambient_data(&(scene->ambient), data);
-// 	else if (ft_compare("C",element))
-// 		camera_data(&(scene->camera),data);
-// 	// else if (ft_compare("L",element))
-// 	// 	light_data(&(scene->light), data);
-// 	// else if(ft_strncmp("sp",element,len))
+void choose_element(char *element, t_scene *scene, char *data)
+{
+	if(ft_compare("A",element))
+		ambient_data(&(scene->ambient), data);
+	else if (ft_compare("C",element))
+		camera_data(&(scene->camera),data);
+	else if (ft_compare("L",element))
+		light_data(&(scene->light), data);
+	// else if(ft_strncmp("sp",element,len))
 
-// 	// else if(ft_strncmp("pl",element,len))
+	// else if(ft_strncmp("pl",element,len))
 
-// 	// else if(ft_strncmp("cy",element,len))
+	// else if(ft_strncmp("cy",element,len))
 
-// 	// else
-// 	// 	fr_error();
-// }
+	// else
+	// 	fr_error();
+}
 
 char *pass_id(char *data)
 {
@@ -36,8 +35,8 @@ void	validate_line_data(char *line)
 {
 	while (*line != '\0')
 	{
-		if((*line > '9' || *line < '0') && \
-		!(*line == '.' || *line == ' ' || *line == ','))
+		if((*line > '9' || *line < '0') && !(*line == '+' \
+		|| *line == '-' || *line == '.' || *line == ' ' || *line == ','))
 			ft_error();
 		line++;
 	}
@@ -53,8 +52,8 @@ void process_line(t_scene *scene, char *data)
 	id = pass_id(data);
 	data += ft_strlen(id);
     validate_line_data(data);
-	// choose_element(id, scene, data);
-	fill_rgb(&data);
+	data = remove_first_last_spaces(data);
+	choose_element(id, scene, data);
 	free(id);
 }
 

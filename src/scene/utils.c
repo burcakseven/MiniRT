@@ -1,10 +1,6 @@
 #include "scene.h"
 
-void ft_error()
-{
-	printf("Error\n");
-	exit(1);
-}
+
 
 char	*remove_first_last_spaces(char	*str)
 {
