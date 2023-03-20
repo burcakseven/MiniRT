@@ -2,20 +2,23 @@
 
 void choose_element(char *element, t_scene *scene, char *data)
 {
+	static int sl = 0;
+	static int cy = 0;
+
 	if(ft_compare("A",element))
 		ambient_data(&(scene->ambient), data);
 	else if (ft_compare("C",element))
 		camera_data(&(scene->camera),data);
 	else if (ft_compare("L",element))
 		light_data(&(scene->light), data);
-	// else if(ft_strncmp("sp",element,len))
-
-	// else if(ft_strncmp("pl",element,len))
-
-	// else if(ft_strncmp("cy",element,len))
-
-	// else
-	// 	fr_error();
+	else if(ft_compare("sp",element))
+		sphere_data(&(scene->sphere), data);
+	else if(ft_compare("pl",element))
+		plane_data(&(scene->plane), data);
+	else if(ft_compare("cy",element))
+		cylinder_data(&(scene->cylinder), data);
+	else
+		fr_error();
 }
 
 char *pass_id(char *data)

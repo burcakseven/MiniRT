@@ -88,4 +88,10 @@ void fill_coordinate(char **data, float xyz[][3], float min, float max);
 void ambient_data(t_ambient *ambient, char *line);
 void camera_data(t_camera *camera, char *line);
 void light_data(t_light *light, char *line);
+
+//objects.c
+void sphere_data(t_sphere **sphere, char *line);
+void plane_data(t_plane **plane, char *line);
+void cylinder_data(t_cylinder **cylinder, char *line);
+
 #endif
