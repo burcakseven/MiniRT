@@ -3,6 +3,7 @@
 void ft_error()
 {
 	printf("Error\n");
+    //garbage_collect()
 	exit(1);
 }
 

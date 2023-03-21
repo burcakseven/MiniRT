@@ -6,9 +6,9 @@ void sphere_data(t_sphere **sphere, char *line)
 
     t_sphere *temp_sp = sphere[sp];
     fill_coordinate(&line ,&(temp_sp->coordinate), MIN,MAX);
-    temp_sp->diameter = ft_atof(*line);
+    temp_sp->diameter = ft_atof(&line);
     line = remove_first_last_spaces(line);
-    temp_sp->color = fill_rgb(*line);
+    temp_sp->color = fill_rgb(&line);
     sp++;
 }
 

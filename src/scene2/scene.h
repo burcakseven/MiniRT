@@ -3,8 +3,8 @@
 
 # include <stdio.h>
 # include <fcntl.h>
-# include "../get_next_line/get_next_line.h"
-# include "../../libs/libft/libft.h"
+# include <get_next_line/get_next_line.h>
+# include <libft.h>
 # include <math.h>
 
 # define MIN -2147483648
@@ -78,7 +78,7 @@ float ft_atof(char **str);
 int fill_rgb(char **data);
 
 //file_op
-int control_file(char *arg);
+int check_file(char *arg);
 
 //edit_line_utils.c
 int fill_rgb(char **data);

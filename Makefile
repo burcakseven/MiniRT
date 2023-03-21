@@ -26,7 +26,7 @@ endif
 DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 
 APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
-scene2/file_op.c scene2/scene_parser.c scene2/scene.c scene2/utils.c scene2/edit_line_utils.c scene2/data_placement.c scene2/object.c
+scene2/file_op.c scene2/scene_parser.c scene2/scene.c scene2/utils.c scene2/edit_line_utils.c scene2/data_placement.c scene2/objects.c
 APP_OBJ		= $(APP_SRC:.c=.o)
 
 SOURCES		= $(addprefix $(SRC_FOLD), $(APP_SRC))
@@ -34,7 +34,7 @@ OBJECTS		= $(addprefix $(OBJ_FOLD), $(APP_OBJ))
 
 
 # LINKER FLAGS: FLAGS TO DEFINE LINKINGS
-LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(SRC_FOLD))
+LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(addsuffix src, $(dir $(DEPENDENTS)))) $(addprefix -I,$(SRC_FOLD))
 
 FLAG_LINUX	= -lXext -lX11 -lm -lz
 
@@ -55,6 +55,8 @@ $(LIB_FOLD)% :
 	@make -C $(dir $@)
 
 
+re: fclean all
+
 clean:
 	@echo removing objects
 	@rm -rf $(OBJ_FOLD)
@@ -64,7 +66,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo removing libraries
 	@for lib in $(DEPENDENTS) ; do \
-		make -C  $$(dirname $$lib) clean fclean ; \
+		make -C  $$(dirname $$lib) clean; \
 	done
 
-.PHONY: all clean fclean
+.PHONY: all clean fclean re

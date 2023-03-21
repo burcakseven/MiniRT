@@ -1,6 +1,6 @@
 #include "scene.h"
 
-void	name_control(char *file_name)
+void	check_name(char *file_name)
 {
 	char	*cmp_addres;
 
@@ -13,7 +13,7 @@ void	name_control(char *file_name)
 	ft_error();
 }
 
-int control_file(char *arg)
+int check_file(char *arg)
 {
     int		fd;
 	char	*file_name;
@@ -21,7 +21,7 @@ int control_file(char *arg)
 	file_name = remove_first_last_spaces(arg);
 	if(!file_name)
 		ft_error();
-	name_control(file_name);
+	check_name(file_name);
 	fd = open(file_name, O_RDONLY);
 	if(fd < 0)
 		ft_error();

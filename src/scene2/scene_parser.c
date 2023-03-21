@@ -5,6 +5,8 @@ void choose_element(char *element, t_scene *scene, char *data)
 	static int sl = 0;
 	static int cy = 0;
 
+	(void) sl, (void) cy;
+
 	if(ft_compare("A",element))
 		ambient_data(&(scene->ambient), data);
 	else if (ft_compare("C",element))
@@ -18,7 +20,7 @@ void choose_element(char *element, t_scene *scene, char *data)
 	else if(ft_compare("cy",element))
 		cylinder_data(&(scene->cylinder), data);
 	else
-		fr_error();
+		ft_error();
 }
 
 char *pass_id(char *data)
