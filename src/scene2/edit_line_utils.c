@@ -58,7 +58,7 @@ int fill_rgb(char **data)
 
 	color = 0;
 	i = 3;
-	color_string = malloc(sizeof(char)*i+1);
+	color_string = new(sizeof(char)*i+1);
 	*(data) = remove_first_last_spaces(*data);
 	while (i--)
 	{
@@ -72,6 +72,6 @@ int fill_rgb(char **data)
             ft_error();
 		color += temp_color << (8*i);
 	}
-	free(color_string);
+	del(color_string);
 	return color;
 }

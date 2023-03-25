@@ -29,7 +29,7 @@ char *pass_id(char *data)
 	int		i;
 
 	i = 0;
-	id = malloc(ft_strlen(data)+1);
+	id = new(ft_strlen(data)+1);
 	while (*data != '\0' && *data != ' ')
 		id[i++] = *data++;
 	id[i] = '\0';
@@ -59,7 +59,7 @@ void process_line(t_scene *scene, char *data)
     validate_line_data(data);
 	data = remove_first_last_spaces(data);
 	choose_element(id, scene, data);
-	free(id);
+	del(id);
 }
 
 void read_scene_data(t_scene *scene, int fd)
@@ -72,6 +72,6 @@ void read_scene_data(t_scene *scene, int fd)
         if (line == NULL)
             break;
         process_line(scene, line);
-        free(line);
+        del(line);
     }
 }

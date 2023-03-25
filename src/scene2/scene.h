@@ -6,6 +6,7 @@
 # include <get_next_line/get_next_line.h>
 # include <libft.h>
 # include <math.h>
+# include <gc/gc.h>
 
 # define MIN -2147483648
 # define MAX 2147483647
