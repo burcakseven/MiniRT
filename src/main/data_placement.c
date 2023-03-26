@@ -14,8 +14,8 @@ void ambient_data(t_ambient *ambient, char *line)
 
 void camera_data(t_camera *camera, char *line)
 {
-  // if(camera->fov) //kontrol lazım
-  //   ft_error();
+  if(camera->fov)
+    ft_error();
   fill_coordinate(&line, &camera->coordinate, MIN, MAX);
   fill_coordinate(&line, &camera->v_orientation, -1, 1);
   camera->fov = (int)ft_atof(&line);
@@ -25,6 +25,7 @@ void camera_data(t_camera *camera, char *line)
     ft_error();
 }
 
+
 void light_data(t_light *light, char *line)
 {
   fill_coordinate(&line, &light->coordinate, MIN, MAX);
@@ -32,6 +33,7 @@ void light_data(t_light *light, char *line)
   if(light->brightness < 0 || light->brightness > 1)
     ft_error();
   fill_rgb(&line);
-  // if(*line != '\0' && *line != '\n') ??
-  //   ft_error();
+
+  if(*line != '\0' && *line != '\n')
+    ft_error();
 }

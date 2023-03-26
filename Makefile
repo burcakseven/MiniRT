@@ -3,11 +3,14 @@ NAME		= minirt
 OS			= $(shell uname)
 
 CC			= gcc
-CFLAGS		:= -Wall -Werror -Wextra -g
+CFLAGS		:= -Wall -Werror -Wextra -g 
 
 SRC_FOLD	= src/
 LIB_FOLD	= libs/
 OBJ_FOLD	= bin/
+
+MAIN_DIR	= main/
+TEST_DIR	= test/
 
 DEP_LIBS	= libft/libft.a
 
@@ -26,16 +29,16 @@ endif
 DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 
 APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
-				scene2/file_op.c scene2/scene_parser.c scene2/scene.c scene2/utils.c scene2/edit_line_utils.c \
-				scene2/data_placement.c scene2/objects.c gc/gc.c
+				file_op.c scene_parser.c scene.c utils.c edit_line_utils.c \
+				data_placement.c objects.c gc/gc.c
 APP_OBJ		= $(APP_SRC:.c=.o)
 
-SOURCES		= $(addprefix $(SRC_FOLD), $(APP_SRC))
-OBJECTS		= $(addprefix $(OBJ_FOLD), $(APP_OBJ))
+SOURCES		= $(addprefix $(SRC_FOLD), $(addprefix $(MAIN_DIR), $(APP_SRC)))
+OBJECTS		= $(addprefix $(OBJ_FOLD), $(addprefix $(MAIN_DIR), $(APP_OBJ)))
 
 
 # LINKER FLAGS: FLAGS TO DEFINE LINKINGS
-LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(addsuffix src, $(dir $(DEPENDENTS)))) $(addprefix -I,$(SRC_FOLD))
+LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(addsuffix src, $(dir $(DEPENDENTS)))) $(addprefix -I,$(addprefix $(SRC_FOLD), $(MAIN_DIR)))
 
 FLAG_LINUX	= -lXext -lX11 -lm -lz
 
@@ -45,6 +48,10 @@ $(NAME): $(DEPENDENTS) $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) $(FLAG_MACOS) -o $(NAME)
 
 all: $(NAME)
+
+
+test:
+
 
 $(OBJ_FOLD)%.o : $(SRC_FOLD)%.c
 	@echo generating object: $@	
@@ -70,4 +77,4 @@ fclean: clean
 		make -C  $$(dirname $$lib) clean; \
 	done
 
-.PHONY: all clean fclean re
+.PHONY: test all clean fclean re

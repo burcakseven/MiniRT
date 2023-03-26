@@ -1,4 +1,4 @@
-#include "scene.h"
+#include <scene.h>
 
 void fill_data(t_scene *scene)
 {
@@ -31,12 +31,14 @@ void	my_mlx_pixel_put(void *addr, int bits_per_pixel, int line_len,  int x, int 
 int	main(int ac, char **av)
 {
 	t_scene scene;
+
 	if (ac != 2)
 	{
 		ft_error();
 	}
 	fill_data_operations(av[1], &scene);
 
+/*
     void *mlx;
     void *win;
     
@@ -45,6 +47,7 @@ int	main(int ac, char **av)
     int bits_per_pixel;
     int image_line_len;
     int image_endian;
+    
 
     mlx = mlx_init();
     win = mlx_new_window(mlx, 1080, 1080, "WINDOW");
@@ -59,4 +62,5 @@ int	main(int ac, char **av)
     }
     mlx_put_image_to_window(mlx, win, img, 0, 0);
     mlx_loop(mlx);
+*/
 }
