@@ -3,7 +3,7 @@ NAME		= minirt
 OS			= $(shell uname)
 
 CC			= gcc
-CFLAGS		:= -Wall -Werror -Wextra -g 
+CFLAGS		+= -Wall -Werror -Wextra -g
 
 SRC_FOLD	= src/
 LIB_FOLD	= libs/
@@ -51,7 +51,8 @@ all: $(NAME)
 
 
 test:
-
+	make re CFLAGS="-DTEST"
+	clear ; ./minirt
 
 $(OBJ_FOLD)%.o : $(SRC_FOLD)%.c
 	@echo generating object: $@	

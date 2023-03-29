@@ -27,7 +27,7 @@ void	my_mlx_pixel_put(void *addr, int bits_per_pixel, int line_len,  int x, int 
 	*(unsigned int*)dst = color;
 }
 
-#include <mlx.h>
+/* #include <mlx.h>
 int	main(int ac, char **av)
 {
 	t_scene scene;
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 		ft_error();
 	}
 	fill_data_operations(av[1], &scene);
-
+ */
 /*
     void *mlx;
     void *win;
@@ -62,5 +62,5 @@ int	main(int ac, char **av)
     }
     mlx_put_image_to_window(mlx, win, img, 0, 0);
     mlx_loop(mlx);
-*/
 }
+*/

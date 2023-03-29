@@ -7,6 +7,7 @@
 # include <libft.h>
 # include <math.h>
 # include <gc/gc.h>
+# include <assert.h>
 
 # define MIN -2147483648
 # define MAX 2147483647
