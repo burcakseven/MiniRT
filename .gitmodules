@@ -2,7 +2,3 @@
 	path = libs/libft
 	url = https://github.com/rasnesakam/42IstanbulCursus.git
 	branch = libft
-
-[submodule "libs/Criterion"]
-	path = libs/Criterion
-	url = https://github.com/Snaipe/Criterion.git
