@@ -10,10 +10,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 void print_color(t_data *img)
 {
 
-    for (int j = HEIGHT-1; j >= 0; --j) {
-        for (int i = 0; i < WIDTH; ++i) {
-            double r = (double)i / (WIDTH-1);
-            double g = (double)j / (HEIGHT-1);
+    for (int j = 255-1; j >= 0; --j) {
+        for (int i = 0; i < 255; ++i) {
+            double r = (double)i / (255-1);
+            double g = (double)j / (255-1);
             double b = 0.25;
 
             int ir = (int)(255.999 * r);

@@ -2,6 +2,9 @@
 # define FRAME_H
 
 #include <mlx.h>
+#include <stdio.h>
+#include "r_vec3.h"
+
 
 # define WIDTH		1920
 # define HEIGHT		1080
@@ -13,6 +16,12 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }              t_data;
+
+typedef struct s_ray
+{
+
+}              t_ray;
+
 
 
 #endif
