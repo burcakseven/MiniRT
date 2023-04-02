@@ -1,17 +1,27 @@
-/*#ifndef FRAME_H
+#ifndef FRAME_H
 # define FRAME_H
+
+#include <mlx.h>
+#include <stdio.h>
+#include "r_vec3.h"
+
 
 # define WIDTH		1920
 # define HEIGHT		1080
 
-struct s_frame {
-    void *img;
-};
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}              t_data;
 
-typedef struct s_frame_1920x1080 t_frame_1920x1080;
+typedef struct s_ray
+{
 
-t_frame_1920x1080 get_frame_1920x1080();
+}              t_ray;
 
-void frame_set_pixel(unsigned int row, unsigned int col, int val);
 
-#endif*/
+
+#endif

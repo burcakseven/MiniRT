@@ -48,7 +48,7 @@ int main(int ac, char **av) {
     return (0);
 }*/
 
-#ifndef TEST
+/* #ifndef TEST
 int	main()
 {
 	int fd = open("deneme.txt",O_RDONLY);
@@ -72,4 +72,4 @@ int main()
 {
     
 }
-#endif
+#endif */
