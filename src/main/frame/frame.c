@@ -7,6 +7,12 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
+
+int rgb_color(int r,int g,int b)
+{
+	return(r<< 16 | g << 8 | b);
+}
+
 void print_color(t_data *img)
 {
 
@@ -19,7 +25,7 @@ void print_color(t_data *img)
             int ir = (int)(255.999 * r);
             int ig = (int)(255.999 * g);
             int ib = (int)(255.999 * b);
-			int rgb = (ir << 16) | (ig << 8) | ib;
+			int rgb = rgb_color(ir,ig,ib);
 			my_mlx_pixel_put(img, i, j, rgb);
         }
     }

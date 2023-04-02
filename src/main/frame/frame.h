@@ -17,11 +17,6 @@ typedef struct	s_data {
 	int		endian;
 }              t_data;
 
-typedef struct s_ray
-{
-
-}              t_ray;
-
-
+int rgb_color(int r,int g,int b);
 
 #endif
