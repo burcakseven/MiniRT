@@ -4,7 +4,8 @@
 #include <mlx.h>
 #include <stdio.h>
 #include "r_vec3.h"
-
+#include "ray.h"
+#include <math.h>
 
 # define WIDTH		1920
 # define HEIGHT		1080

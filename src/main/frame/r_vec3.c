@@ -34,19 +34,25 @@ t_vec3 vec3_scale(const t_vec3 v, const double s)
     return w;
 }
 
-double vec3_length(const t_vec3* v)
+double vec3_length(const t_vec3 v)
 {
-    return sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-void vec3_normalize(t_vec3* v)
+t_vec3 vec3_normalize(t_vec3 v)
 {
-    double len = vec3_length(v);
+    t_vec3 normalize;
+    double len;
+
+    len = vec3_length(v);
     if (len != 0.0) {
-        v->x /= len;
-        v->y /= len;
-        v->z /= len;
+        normalize.x = v.x / len;
+        normalize.y = v.y / len;
+        normalize.z = v.z / len;
     }
+    else
+        return (v);
+    return (normalize);
 }
 
 double vec3_dot(const t_vec3* a, const t_vec3* b)
@@ -54,9 +60,11 @@ double vec3_dot(const t_vec3* a, const t_vec3* b)
     return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
-void vec3_cross(const t_vec3* a, const t_vec3* b, t_vec3* c)
+t_vec3 vec3_cross(const t_vec3 a, const t_vec3 b)
 {
-    c->x = a->y * b->z - a->z * b->y;
-    c->y = a->z * b->x - a->x * b->z;
-    c->z = a->x * b->y - a->y * b->x;
+    t_vec3 c;
+    c.x = a.y * b.z - a.z * b.y;
+    c.y = a.z * b.x - a.x * b.z;
+    c.z = a.x * b.y - a.y * b.x;
+    return c;
 }

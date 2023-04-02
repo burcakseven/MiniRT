@@ -19,7 +19,7 @@ color ray_color (const t_ray *r)
 {
     double t;
     color added;
-    vec3_normalize(&(r->dir));
+    vec3_normalize(r->dir);
     t = 0.5 *(r->dir.y) +1.0;
     color full = {1.0,1.0,1.0};
     color blue = {0.5, 0.7, 1.0};
