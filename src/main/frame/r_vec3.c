@@ -7,25 +7,31 @@ void vec3_init(t_vec3* v, double x, double y, double z)
     v->z = z;
 }
 
-void vec3_add(const t_vec3* a, const t_vec3* b, t_vec3* c)
+t_vec3 vec3_add(const t_vec3 a, const t_vec3 b)
 {
-    c->x = a->x + b->x;
-    c->y = a->y + b->y;
-    c->z = a->z + b->z;
+    t_vec3 c;
+    c.x = a.x + b.x;
+    c.y = a.y + b.y;
+    c.z = a.z + b.z;
+    return c;
 }
 
-void vec3_subtract(const t_vec3* a, const t_vec3* b, t_vec3* c)
+t_vec3 vec3_subtract(const t_vec3 a, const t_vec3 b)
 {
-    c->x = a->x - b->x;
-    c->y = a->y - b->y;
-    c->z = a->z - b->z;
+    t_vec3 c;
+    c.x = a.x - b.x;
+    c.y = a.y - b.y;
+    c.z = a.z - b.z;
+    return c;
 }
 
-void vec3_scale(const t_vec3* v, double s, t_vec3* w)
+t_vec3 vec3_scale(const t_vec3 v, const double s)
 {
-    w->x = v->x * s;
-    w->y = v->y * s;
-    w->z = v->z * s;
+    t_vec3 w;
+    w.x = v.x * s;
+    w.y = v.y * s;
+    w.z = v.z * s;
+    return w;
 }
 
 double vec3_length(const t_vec3* v)
