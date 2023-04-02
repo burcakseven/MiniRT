@@ -17,6 +17,6 @@ typedef struct	s_data {
 	int		endian;
 }              t_data;
 
-int rgb_color(int r,int g,int b);
+int rgb_color(color colour);
 
 #endif

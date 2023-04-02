@@ -8,9 +8,16 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int rgb_color(int r,int g,int b)
+int rgb_color(color colour)
 {
-	return(r<< 16 | g << 8 | b);
+	int ir;
+	int ig;
+	int ib;
+
+	ir = (int)(255.999 * colour.x);
+    ig = (int)(255.999 * colour.y);
+    ib = (int)(255.999 * colour.z);
+	return(ir<< 16 | ig << 8 | ib);
 }
 
 void print_color(t_data *img)
@@ -22,10 +29,8 @@ void print_color(t_data *img)
             double g = (double)j / (255-1);
             double b = 0.25;
 
-            int ir = (int)(255.999 * r);
-            int ig = (int)(255.999 * g);
-            int ib = (int)(255.999 * b);
-			int rgb = rgb_color(ir,ig,ib);
+			color pixel_color = {r, g, b};
+			int rgb = rgb_color(pixel_color);
 			my_mlx_pixel_put(img, i, j, rgb);
         }
     }
