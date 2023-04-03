@@ -1,8 +1,10 @@
-/*#include <unistd.h>
+#include <unistd.h>
 #include <frame/frame.h>
 #include <stdio.h>
 #include <mlx.h>
+#include <scene.h>
 
+/*
 void print_frame(){
 
     void *mlx;
@@ -45,3 +47,29 @@ int main(int ac, char **av) {
     print_frame();
     return (0);
 }*/
+
+/* #ifndef TEST
+int	main()
+{
+	int fd = open("deneme.txt",O_RDONLY);
+	int	bln;
+	bln = 1;
+	char *str;
+    printf("maine girdi");
+	while (bln)
+	{
+		str = get_next_line(fd);
+		if (str)
+		{
+			printf("%s",str);
+		}
+		else
+			bln = 0;
+	}
+}
+#else
+int main()
+{
+    
+}
+#endif */

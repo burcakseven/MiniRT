@@ -51,21 +51,3 @@ char	*get_next_line(int fd)
 	buffer = get_new_buffer(buffer);
 	return (line);
 }
-/*
-int	main()
-{
-	int fd = open("deneme.txt",O_RDONLY);
-	int	bln;
-	bln = 1;
-	char *str;
-	while (bln)
-	{
-		str = get_next_line(fd);
-		if (str)
-		{
-			printf("%s",str);
-		}
-		else
-			bln = 0;
-	}
-}*/

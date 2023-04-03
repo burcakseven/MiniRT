@@ -3,7 +3,7 @@ NAME		= minirt
 OS			= $(shell uname)
 
 CC			= gcc
-CFLAGS		:= -Wall -Werror -Wextra -g 
+CFLAGS		+= -Wall -Werror -Wextra -g
 
 SRC_FOLD	= src/
 LIB_FOLD	= libs/
@@ -30,7 +30,7 @@ DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 
 APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
 				file_op.c scene_parser.c scene.c utils.c edit_line_utils.c \
-				data_placement.c objects.c gc/gc.c
+				data_placement.c objects.c gc/gc.c frame/r_vec3.c frame/ray.c
 APP_OBJ		= $(APP_SRC:.c=.o)
 
 SOURCES		= $(addprefix $(SRC_FOLD), $(addprefix $(MAIN_DIR), $(APP_SRC)))
@@ -51,7 +51,8 @@ all: $(NAME)
 
 
 test:
-
+	make re CFLAGS="-DTEST"
+	clear ; ./minirt
 
 $(OBJ_FOLD)%.o : $(SRC_FOLD)%.c
 	@echo generating object: $@	
