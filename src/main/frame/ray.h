@@ -2,6 +2,7 @@
 #define RAY_H
 
 #include "r_vec3.h"
+#include "frame.h"
 
 typedef struct s_ray
 {
@@ -9,7 +10,8 @@ typedef struct s_ray
     t_vec3 dir;
 } t_ray;
 
-t_ray make_ray(t_vec3 origin, t_vec3 direction);
+t_ray make_ray(point3 origin, t_vec3 direction);
 t_vec3 ray_at(t_ray r, double t);
+color ray_color (const t_ray *r);
 
 #endif
