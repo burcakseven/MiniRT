@@ -15,11 +15,32 @@ point3 ray_at(t_ray r, double t) {
     return result;
 }
 
+int hit_sphere(const point3 center, double rad, const t_ray r)
+{
+    t_vec3 oc;
+
+    oc = vec3_subtract(r.orig,center);
+    double a = vec3_dot(&r.dir, &r.dir);
+    double b = 2.0 * vec3_dot(&oc, &r.dir);
+    double c = vec3_dot(&oc,&oc) - rad*rad;
+    double discr =(b*b) -(4*a*c);
+    // if(discr >= 0)
+    //     return 1;
+    // return 0;
+    return (discr > 0);
+}
+
 color ray_color (const t_ray *r)
 {
     double t;
     color added;
-    vec3_normalize(r->dir);
+    point3 sp = {0,0,1};
+    if(hit_sphere(sp,0.5,*r))
+    {
+        color cl = {1, 0, 0};
+        printf("MERH\nA");
+        return cl;
+    }
     t = 0.5 *(r->dir.y) +1.0;
     color full = {1.0,1.0,1.0};
     color blue = {0.5, 0.7, 1.0};
