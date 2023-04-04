@@ -19,5 +19,6 @@ typedef struct	s_data {
 }              t_data;
 
 int rgb_color(color colour);
+// int hit_sphere(const point3 center, double rad, t_ray r);
 
 #endif

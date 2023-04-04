@@ -27,16 +27,16 @@ double deg2rad(double degrees) {
 void print_color(t_data *img)
 {
     // Image
-    const double aspect_ratio = 16.0 / 9.0;
+    const double aspect_ratio = 16.0 / 16.0;
     const int image_width = 400;
     const int image_height = (int)(image_width / aspect_ratio);
 
     // Camera
     t_vec3 origin = { -50.0, 0, 20 };
     t_vec3 orientation = { 0.0, 0.0, 1.0 };
-    double fov = 70.0;
+    // double fov = 70.0;
 
-    double viewport_height = 2.0 * tan(deg2rad(fov) / 2.0);
+    double viewport_height = 4.0;
     double viewport_width = aspect_ratio * viewport_height;
 
     t_vec3 normalz = {0.0, 1.0, 0.0};
