@@ -2,7 +2,7 @@
 #include <frame/frame.h>
 #include <stdio.h>
 #include <mlx.h>
-#include <scene.h>
+#include <parser/scene.h>
 
 /*
 void print_frame(){

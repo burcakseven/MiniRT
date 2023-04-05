@@ -1,6 +1,6 @@
 #include "gc.h"
-#include <scene.h>
 #include <stdlib.h>
+#include <parser/scene.h>
 
 struct s_allocated {
 	void *data;
