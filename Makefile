@@ -2,6 +2,9 @@ NAME		= minirt
 
 OS			= $(shell uname)
 
+OS_LINUX	= Linux
+OS_MAC		= Darwin
+
 CC			= gcc
 CFLAGS		+= #-Wall -Werror -Wextra -g
 
@@ -18,11 +21,11 @@ LINUX_DEPS	= minilibx_linux/libmlx.a
 
 MACOS_DEPS	= minilibx_opengl/libmlx.a
 
-ifeq ($(OS), Linux)
+ifeq ($(OS), $(OS_LINUX))
 	DEP_LIBS += $(LINUX_DEPS)
 endif
 
-ifeq ($(OS), Darwin)
+ifeq ($(OS), $(OS_MAC))
 	DEP_LIBS += $(MACOS_DEPS)
 endif
 
@@ -40,12 +43,16 @@ OBJECTS		= $(addprefix $(OBJ_FOLD), $(addprefix $(MAIN_DIR), $(APP_OBJ)))
 # LINKER FLAGS: FLAGS TO DEFINE LINKINGS
 LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(addsuffix src, $(dir $(DEPENDENTS)))) $(addprefix -I,$(addprefix $(SRC_FOLD), $(MAIN_DIR)))
 
-FLAG_LINUX	= -lXext -lX11 -lm -lz
+ifeq ($(OS), Linux)
+	OSFLAG = -lXext -lX11 -lm -lz
+endif
 
-FLAG_MACOS	= -framework OpenGL -framework AppKit
+ifeq ($(OS), Darwin)
+	OSFLAG = -framework OpenGL -framework AppKit
+endif
 
 $(NAME): $(DEPENDENTS) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(DEPENDENTS) $(FLAG_MACOS) -o $(NAME)
+	$(CC) $(OSFLAG) $(OBJECTS) $(DEPENDENTS) -o $(NAME)
 
 all: $(NAME)
 
