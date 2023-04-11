@@ -3,8 +3,8 @@
 
 #include <mlx.h>
 #include <stdio.h>
-#include "r_vec3.h"
-#include "ray.h"
+#include <vec3/r_vec3.h>
+#include <ray/ray.h>
 #include <math.h>
 
 # define WIDTH		1920

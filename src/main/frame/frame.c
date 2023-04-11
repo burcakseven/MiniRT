@@ -62,7 +62,7 @@ void print_color(t_data *img)
         }
     }
 }
-
+/*
 void	init_mlx(void)
 {
 	void	*mlx;
@@ -84,3 +84,4 @@ int	main()
 {
 	init_mlx();
 }
+*/

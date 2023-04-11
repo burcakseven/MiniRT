@@ -31,9 +31,9 @@ endif
 
 DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 
-APP_SRC		= main.c frame/frame.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
+APP_SRC		= main.c frame/frame.c frame/hit_objects.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
 				parser/file_op.c parser/scene_parser.c parser/scene.c parser/utils.c parser/edit_line_utils.c \
-				parser/data_placement.c parser/objects.c gc/gc.c frame/r_vec3.c frame/ray.c frame/hit_objects.c
+				parser/data_placement.c parser/objects.c gc/gc.c vec3/r_vec3.c ray/ray.c render/render.c
 APP_OBJ		= $(APP_SRC:.c=.o)
 
 SOURCES		= $(addprefix $(SRC_FOLD), $(addprefix $(MAIN_DIR), $(APP_SRC)))
