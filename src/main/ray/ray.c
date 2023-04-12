@@ -1,4 +1,8 @@
-#include "ray.h"
+//
+// Created by emakas on 12.04.2023.
+//
+
+#include <ray/ray.h>
 
 t_ray make_ray(point3 origin, t_vec3 direction)
 {

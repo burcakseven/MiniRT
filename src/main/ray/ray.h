@@ -1,8 +1,8 @@
 #ifndef RAY_H
 #define RAY_H
 
-#include "vec3/r_vec3.h"
-#include "frame/frame.h"
+#include <vec3/r_vec3.h>
+#include <frame/frame.h>
 
 typedef struct s_ray
 {
