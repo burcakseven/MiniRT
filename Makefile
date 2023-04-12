@@ -6,7 +6,7 @@ OS_LINUX	= Linux
 OS_MAC		= Darwin
 
 CC			= gcc
-CFLAGS		+= -g -lm #-Wall -Werror -Wextra -g
+CFLAGS		+= -g #-Wall -Werror -Wextra -g
 
 SRC_FOLD	= src/
 LIB_FOLD	= libs/
@@ -44,7 +44,7 @@ OBJECTS		= $(addprefix $(OBJ_FOLD), $(addprefix $(MAIN_DIR), $(APP_OBJ)))
 LFLAGS		:= $(addprefix -I,$(dir $(DEPENDENTS))) $(addprefix -I,$(addsuffix src, $(dir $(DEPENDENTS)))) $(addprefix -I,$(addprefix $(SRC_FOLD), $(MAIN_DIR)))
 
 ifeq ($(OS), Linux)
-	OSFLAG = -lXext -lX11 -lz
+	OSFLAG = -lXext -lX11 -lz -lm 
 endif
 
 ifeq ($(OS), Darwin)
