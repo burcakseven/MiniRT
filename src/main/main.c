@@ -55,7 +55,11 @@ t_cylinder create_cylinder(){
  * @return
  */
 point3 find_intercept(t_ray ray, t_sphere sphere, color *colour){
-
+	point3 point;
+	(void) ray;
+	(void) sphere;
+	(void) colour;
+	return (point);
 }
 
 t_ray create_ray(point3 origin, t_vec3 direction){
@@ -72,7 +76,7 @@ point3 convert_point3(float coordinate[3]){
     point.x = coordinate[0];
     point.y = coordinate[1];
     point.z = coordinate[2];
-
+	return (point);
 }
 
 /**
