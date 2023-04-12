@@ -62,7 +62,7 @@ test:
 	clear ; ./minirt
 
 $(OBJ_FOLD)%.o : $(SRC_FOLD)%.c
-	@echo generating object: $@	
+	@echo generating object: $@	 from: $<
 	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
 	@$(CC) $(CFLAGS) $(LFLAGS) -c $< -o $@ 
 
