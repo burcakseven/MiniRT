@@ -10,28 +10,6 @@
 #define ASPECT_RATIO WIDTH / HEIGHT
 #define WINDOW_TITLE "minirt"
 
-void print_image(){
-
-    void *mlx;
-    void *win;
-
-    mlx = mlx_init();
-	win = mlx_new_window(mlx, 1920, 1080, "");
-
-    //t_frame_1920x1080 frame;
-
-    //frame = get_frame_1920x1080();
-
-
-    for(int i = 0; i < 1080; i++){
-        for (int j = 0; j < 1920; j++){
-            //mlx_pixel_put(mlx, win, i,j,frame.canvas[i][j]);
-        }
-    }
-
-    mlx_loop(mlx);
-}
-
 typedef struct s_mlx {
     void *mlx;
     void *win
@@ -49,16 +27,6 @@ t_mlx get_mlx() {
     retval.mlx = mlx;
     retval.win = win;
     return retval;
-}
-
-void *get_img(){
-    void *img = NULL;
-    t_mlx mlx;
-
-    mlx = get_mlx();
-    if (img == NULL)
-        img = mlx_new_image(mlx.mlx,WIDTH, HEIGHT);
-    return img;
 }
 
 
@@ -113,18 +81,36 @@ color find_intercept(t_ray ray, t_sphere sphere){
 
 }
 
-t_ray create_ray(){
-    // calculate from camera point to canvas pixel
+t_ray create_ray(point3 origin, t_vec3 direction){
+    t_ray ray;
+
+    ray.orig = origin;
+    ray.dir = direction;
+    return (ray);
+}
+
+point3 convert_point3(float coordinate[3]){
+    point3  point;
+
+    point.x = coordinate[0];
+    point.y = coordinate[1];
+    point.z = coordinate[2];
+
 }
 
 void render_scene(t_scene scene){
     t_canvas    canvas;
     color       colour;
-    canvas = get_canvas();
+    double      increment_i;
+    double      increment_j;
 
-    for (int i = 0; i < WIDTH; i++){
-        for (int j = 0; j < HEIGHT; j++){
-            t_ray ray = create_ray();
+    canvas = get_canvas();
+    increment_i = (double) scene.camera.fov / WIDTH;
+    // render image
+    for (double i = 0; i < (double) scene.camera.fov; i += increment_i){
+        for (double j = 0; j < scene.camera.fov; j += increment_j){
+            t_ray ray = create_ray(convert_point3(scene.camera.coordinate ),
+                                   (t_vec3){x:0.1});
             colour = find_intercept(ray,*scene.sphere); // Temprorary Solution
             // mask colour with light
             put_pixel_to_img(i,j,(color){256,0,0});
