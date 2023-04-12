@@ -4,31 +4,8 @@
 #include <mlx.h>
 #include <parser/scene.h>
 #include <render/render.h>
-
-#define WIDTH 1920
-#define HEIGHT 1080
-#define ASPECT_RATIO WIDTH / HEIGHT
-#define WINDOW_TITLE "minirt"
-
-typedef struct s_mlx {
-    void *mlx;
-    void *win
-} t_mlx;
-
-t_mlx get_mlx() {
-    static void *mlx = NULL;
-    static void *win = NULL;
-    t_mlx retval;
-
-    if (mlx == NULL)
-        mlx = mlx_init();
-    if (win == NULL)
-        win = mlx_new_window(mlx, WIDTH, HEIGHT, WINDOW_TITLE);
-    retval.mlx = mlx;
-    retval.win = win;
-    return retval;
-}
-
+#include <ray/ray.h>
+#include <utils/utils.h>
 
 t_canvas get_canvas(){
     static t_canvas *canvas = NULL;
@@ -74,10 +51,10 @@ t_cylinder create_cylinder(){
 }
 
 /**
- * For sphere
+ * For cylinder
  * @return
  */
-color find_intercept(t_ray ray, t_sphere sphere){
+point3 find_intercept(t_ray ray, t_sphere sphere, color *colour){
 
 }
 
@@ -98,6 +75,17 @@ point3 convert_point3(float coordinate[3]){
 
 }
 
+/**
+ * reduce colour according to relation between light source and interception point
+*/
+void reduce_color(t_light light, point3 intercept, color *colour){
+    (void) light;
+    (void) intercept;
+    (void) colour;
+
+    return ;
+}
+
 void render_scene(t_scene scene){
     t_canvas    canvas;
     color       colour;
@@ -106,14 +94,40 @@ void render_scene(t_scene scene){
 
     canvas = get_canvas();
     increment_i = (double) scene.camera.fov / WIDTH;
+
+    double viewport_height = 4.0;
+    double viewport_width = ASPECT_RATIO * viewport_height;
+
+    point3 camera_orientation = convert_point3(scene.camera.v_orientation);
+    point3 camera_origin = convert_point3(scene.camera.coordinate);
+
+    t_vec3 normalz = {0.0, 1.0, 0.0};
+
+    t_vec3 horizontal = vec3_scale(vec3_normalize(vec3_cross(camera_orientation,normalz)),viewport_width);
+
+    t_vec3 vertical = vec3_scale(vec3_normalize(vec3_cross(horizontal, camera_orientation)),viewport_height);
+
+    t_vec3 lower_left_corner = vec3_subtract(vec3_subtract(vec3_subtract(camera_origin, vec3_scale(horizontal, 0.5)),
+                                                           vec3_scale(vertical, 0.5)), camera_orientation);
+ 
     // render image
-    for (double i = 0; i < (double) scene.camera.fov; i += increment_i){
-        for (double j = 0; j < scene.camera.fov; j += increment_j){
-            t_ray ray = create_ray(convert_point3(scene.camera.coordinate ),
-                                   (t_vec3){x:0.1});
-            colour = find_intercept(ray,*scene.sphere); // Temprorary Solution
+    for (int i = 0; i < WIDTH; i ++){
+        for (int j = 0; j < HEIGHT; j ++){
+            double u = (double)i / (WIDTH - 1);
+            double v = (double)j / (HEIGHT - 1);
+            point3 interception;
+            
+            t_ray ray = make_ray(convert_point3(scene.camera.coordinate ),
+                                 vec3_add(lower_left_corner, vec3_add(vec3_scale(horizontal, u),
+                                                                      vec3_scale(vertical, v))));
+            
+            interception = find_intercept(ray,*scene.sphere,&colour); // Temprorary Solution
+
+            // ışığa doğru vektör
+            reduce_color(scene.light,interception,&colour);
+            
             // mask colour with light
-            put_pixel_to_img(i,j,(color){256,0,0});
+            put_pixel_to_img(i,j,colour);
         }
     }
 }
@@ -135,7 +149,7 @@ int	main()
     t_cylinder cylinder = create_cylinder();
     scene.camera = create_camera();
     scene.cylinder = &cylinder;
-
+	//scene = create_scene();
     render_scene(scene);
     show_img();
     return 0;
@@ -143,8 +157,9 @@ int	main()
 #endif
 
 #ifdef TEST
+#include <stdio.h>
 int main(){
-
+	printf("DO NOT TEST ME!!\n")
 }
 #endif
 
