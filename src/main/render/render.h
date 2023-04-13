@@ -9,7 +9,7 @@
 #include <mlx.h>
 # define WIDTH			1920
 # define HEIGHT			1080
-# define ASPECT_RATIO	WIDTH / HEIGHT
+# define ASPECT_RATIO	(double) WIDTH / (double) HEIGHT
 # define WINDOW_TITLE	"miniRTE"
 
 

@@ -23,6 +23,8 @@ typedef struct s_camera {
 	float 	coordinate[3];
 	float	v_orientation[3]; // between [0-1]
 	int		fov; // between [0-180]
+    float   viewport_height;
+    float   viewport_width;
 }	t_camera;
 
 typedef struct s_light {

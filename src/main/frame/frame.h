@@ -15,7 +15,7 @@ typedef struct	s_data {
 	int		endian;
 }              t_data;
 
-int rgb_color(color colour);
+unsigned int rgb_color(color colour);
 // int hit_sphere(const point3 center, double rad, t_ray r);
 
 #endif

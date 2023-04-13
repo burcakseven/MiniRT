@@ -8,16 +8,16 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int rgb_color(color colour)
+unsigned int rgb_color(color colour)
 {
-	int ir;
-	int ig;
-	int ib;
+	unsigned int ir;
+	unsigned int ig;
+	unsigned int ib;
 
-	ir = (int)(255.999 * colour.x);
-    ig = (int)(255.999 * colour.y);
-    ib = (int)(255.999 * colour.z);
-	return(ir<< 16 | ig << 8 | ib);
+	ir = (int) colour.x % 256;
+    ig = (int) colour.y % 256;
+    ib = (int) colour.z % 256;
+	return((ir<< 16 | ig << 8 | ib));
 }
 
 double deg2rad(double degrees) {

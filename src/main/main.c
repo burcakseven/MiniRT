@@ -30,6 +30,8 @@ t_camera create_camera(){
     camera.v_orientation[0] = 1.0f;
     camera.v_orientation[1] = 1.0f;
     camera.v_orientation[2] = 1.0f;
+    camera.viewport_height = 2.0;
+    camera.viewport_width = ASPECT_RATIO * camera.viewport_height;
 
     camera.fov = 75;
     return camera;
@@ -59,6 +61,9 @@ point3 find_intercept(t_ray ray, t_sphere sphere, color *colour){
 	(void) ray;
 	(void) sphere;
 	(void) colour;
+    point.x = 1;
+    point.y = 1;
+    point.z = 1;
 	return (point);
 }
 
@@ -91,47 +96,35 @@ void reduce_color(t_light light, point3 intercept, color *colour){
 }
 
 void render_scene(t_scene scene){
-    t_canvas    canvas;
     color       colour;
-    double      increment_i;
-    double      increment_j;
+    t_canvas    canvas;
+    point3      intersection;
+    point3      horizontal;
+    point3      vertical;
 
+    colour.x = 255;
+    colour.y = 0;
+    colour.z = 0;
     canvas = get_canvas();
-    increment_i = (double) scene.camera.fov / WIDTH;
 
-    double viewport_height = 4.0;
-    double viewport_width = ASPECT_RATIO * viewport_height;
+    horizontal = vec3_add(scene.camera.coordinate,);
 
-    point3 camera_orientation = convert_point3(scene.camera.v_orientation);
-    point3 camera_origin = convert_point3(scene.camera.coordinate);
 
-    t_vec3 normalz = {0.0, 1.0, 0.0};
-
-    t_vec3 horizontal = vec3_scale(vec3_normalize(vec3_cross(camera_orientation,normalz)),viewport_width);
-
-    t_vec3 vertical = vec3_scale(vec3_normalize(vec3_cross(horizontal, camera_orientation)),viewport_height);
-
-    t_vec3 lower_left_corner = vec3_subtract(vec3_subtract(vec3_subtract(camera_origin, vec3_scale(horizontal, 0.5)),
-                                                           vec3_scale(vertical, 0.5)), camera_orientation);
- 
     // render image
-    for (int i = 0; i < WIDTH; i ++){
-        for (int j = 0; j < HEIGHT; j ++){
-            double u = (double)i / (WIDTH - 1);
-            double v = (double)j / (HEIGHT - 1);
-            point3 interception;
-            
-            t_ray ray = make_ray(convert_point3(scene.camera.coordinate ),
-                                 vec3_add(lower_left_corner, vec3_add(vec3_scale(horizontal, u),
-                                                                      vec3_scale(vertical, v))));
-            
-            interception = find_intercept(ray,*scene.sphere,&colour); // Temprorary Solution
+    for (int w = 0; w < WIDTH; w++){
+        for (int h = 0; h < HEIGHT; h++){
+            double u = (double)w / (WIDTH - 1);
+            double v = (double)h / (HEIGHT - 1);
+
+            //intercection = find_intercept(ray,*scene.sphere,&colour); // Temprorary Solution
 
             // ışığa doğru vektör
-            reduce_color(scene.light,interception,&colour);
+            //reduce_color(scene.light,interception,&colour);
             
             // mask colour with light
-            put_pixel_to_img(i,j,colour);
+            //printf("frame(%d,%d) <- [%x]\n",w,h, rgb_color(colour));
+
+            put_pixel_to_img(w,h, colour);
         }
     }
 }
@@ -153,7 +146,7 @@ int	main()
     t_cylinder cylinder = create_cylinder();
     scene.camera = create_camera();
     scene.cylinder = &cylinder;
-	//scene = create_scene();
+	//scene = create_scene(av[1]);
     render_scene(scene);
     show_img();
     return 0;
