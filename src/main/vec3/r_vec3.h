@@ -5,7 +5,7 @@
 
 typedef struct s_vec3
 {
-    double x, y, z;
+    long double x, y, z;
 }              t_vec3;
 
 typedef t_vec3 point3;  // 3D point
@@ -20,5 +20,8 @@ double vec3_length(const t_vec3 v);
 t_vec3 vec3_normalize(t_vec3 v);
 double vec3_dot(const t_vec3* a, const t_vec3* b);
 t_vec3 vec3_cross(const t_vec3 a, const t_vec3 b);
+t_vec3 rotate_xy(t_vec3 vec, long double angle);
+t_vec3 rotate_xz(t_vec3 vec, long double angle);
+t_vec3 rotate_yz(t_vec3 vec, long double angle);
 
 #endif

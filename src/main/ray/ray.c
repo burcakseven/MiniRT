@@ -42,7 +42,7 @@ color ray_color (const t_ray *r)
     if(hit_sphere(sp,0.5,*r))
     {
         color cl = {1, 0, 0};
-        printf("MERH\nA");
+        //printf("MERH\nA");
         return cl;
     }
     t = 0.5 *(r->dir.y) +1.0;

@@ -27,13 +27,13 @@ t_camera create_camera(){
     camera.coordinate[0] = 0.0f;
     camera.coordinate[1] = 0.0f;
     camera.coordinate[2] = 0.0f;
-    camera.v_orientation[0] = 1.0f;
-    camera.v_orientation[1] = 1.0f;
+    camera.v_orientation[0] = 0.0f;
+    camera.v_orientation[1] = 0.0f;
     camera.v_orientation[2] = 1.0f;
     camera.viewport_height = 2.0;
     camera.viewport_width = ASPECT_RATIO * camera.viewport_height;
 
-    camera.fov = 75;
+    camera.fov = 60;
     return camera;
 }
 
@@ -78,9 +78,9 @@ t_ray create_ray(point3 origin, t_vec3 direction){
 point3 convert_point3(float coordinate[3]){
     point3  point;
 
-    point.x = coordinate[0];
-    point.y = coordinate[1];
-    point.z = coordinate[2];
+    point.x = (long double) coordinate[0];
+    point.y = (long double) coordinate[1];
+    point.z = (long double) coordinate[2];
 	return (point);
 }
 
@@ -99,34 +99,40 @@ void render_scene(t_scene scene){
     color       colour;
     t_canvas    canvas;
     point3      intersection;
-    point3      horizontal;
-    point3      vertical;
+    t_ray       ray;
 
-    colour.x = 255;
-    colour.y = 0;
-    colour.z = 0;
     canvas = get_canvas();
 
-    horizontal = vec3_add(scene.camera.coordinate,);
+    ray.orig = convert_point3(scene.camera.coordinate);
+
+    //printf("old vec: (%Lf,%Lf,%Lf) -> (%Lf, %Lf, %Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
+    ray.dir = vec3_add(convert_point3(scene.camera.v_orientation), convert_point3(scene.camera.coordinate));
+    printf("sum vec: (%Lf,%Lf,%Lf) -> (%Lf, %Lf, %Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
+    ray.dir = rotate_xz(ray.dir,scene.camera.fov/2);
+    printf("rotated vec: (%Lf,%Lf,%Lf) -> (%Lf, %Lf, %Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
+    ray.dir = rotate_yz(ray.dir,scene.camera.fov/2);
+    printf("rotated vec: (%Lf,%Lf,%Lf) -> (%Lf, %Lf, %Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
 
 
+    int v_index = 0;
     // render image
-    for (int w = 0; w < WIDTH; w++){
-        for (int h = 0; h < HEIGHT; h++){
-            double u = (double)w / (WIDTH - 1);
-            double v = (double)h / (HEIGHT - 1);
-
-            //intercection = find_intercept(ray,*scene.sphere,&colour); // Temprorary Solution
-
-            // ışığa doğru vektör
-            //reduce_color(scene.light,interception,&colour);
-            
-            // mask colour with light
-            //printf("frame(%d,%d) <- [%x]\n",w,h, rgb_color(colour));
-
-            put_pixel_to_img(w,h, colour);
+    while (v_index < HEIGHT){
+        //printf("old vec: (%f,%f,%f)\n",ray.dir.x,ray.dir.y,ray.dir.z);
+        ray.dir = rotate_yz(ray.dir,-((double) v_index * ((double) scene.camera.fov / HEIGHT)));
+        
+        //ray.dir = rotate_zy(ray.dir,-((double) v_index * ((double) scene.camera.fov / HEIGHT)));
+        //printf("rotated y-z vec: (%f,%f,%f)\n",ray.dir.x,ray.dir.y,ray.dir.z);
+        
+        int h_index = 0;
+        while (h_index < WIDTH) {
+            ray.dir = rotate_xz(ray.dir,-((double) h_index * ((double) scene.camera.fov / WIDTH)));
+            colour = ray_color(&ray);
+            put_pixel_to_img(h_index,v_index,colour);
+            h_index++;
         }
+        v_index++;
     }
+    
 }
 
 void show_img(){
