@@ -15,8 +15,8 @@ t_vec3 rotate_xz(t_vec3 vec, long double angle){
 	t_vec3 ret_vec;
 
 	ret_vec.y = vec.y;
-	ret_vec.x = (cosl(angle) * vec.x) - (sinl(angle) * vec.y);
-	ret_vec.z = (sinl(angle) * vec.x) + (cosl(angle) * vec.y);
+	ret_vec.x = (cosl(angle) * vec.x) - (sinl(angle) * vec.z);
+	ret_vec.z = (sinl(angle) * vec.x) + (cosl(angle) * vec.z);
 	return (ret_vec);
 }
 
