@@ -1,4 +1,4 @@
-#include <scene.h>
+#include <parser/scene.h>
 
 void fill_data(t_scene *scene)
 {
