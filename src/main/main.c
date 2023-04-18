@@ -25,16 +25,14 @@ t_canvas get_canvas(){
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate[0] = 0.0f;
-    camera.coordinate[1] = 0.0f;
-    camera.coordinate[2] = 0.0f;
+    camera.coordinate[0] = 1.0f;
+    camera.coordinate[1] = 2.0f;
+    camera.coordinate[2] = 14.0f;
     camera.v_orientation[0] = 0.0f;
     camera.v_orientation[1] = 0.0f;
     camera.v_orientation[2] = 1.0f;
-    camera.viewport_height = 2.0;
-    camera.viewport_width = ASPECT_RATIO * camera.viewport_height;
 
-    camera.fov = 10;
+    camera.fov = 90;
     return camera;
 }
 
@@ -80,33 +78,53 @@ void reduce_color(t_light light, point3 intercept, color *colour){
     return ;
 }
 
-void render_scene(t_scene scene){
-    color       colour;
-    point3      intersection;
-    t_ray       ray_h;
-    t_ray       ray_v;
-    t_ray       ray;
+//void render_scene(t_scene scene){
+//    color       colour;
+//    point3      intersection;
+//    t_ray       ray_h;
+//    t_ray       ray_v;
+//    t_ray       ray;
 
-    ray_v = make_ray((point3){0,-scene.camera.viewport_height,1},(point3){0,scene.camera.viewport_height,1});
-    ray_h = make_ray((point3){-scene.camera.viewport_width,0,1},(point3){scene.camera.viewport_width,0,1});
+//    ray_v = make_ray((point3){0,-scene.camera.viewport_height,1},(point3){0,scene.camera.viewport_height,1});
+//    ray_h = make_ray((point3){-scene.camera.viewport_width,0,1},(point3){scene.camera.viewport_width,0,1});
+//    ray.orig = convert_point3(scene.camera.coordinate);
+//    ray.dir.y = -scene.camera.viewport_height;
+//    ray.dir.z = 1;
+//    int v_index = 0;
+//    while (ray.dir.y < scene.camera.viewport_height) {
+//        ray.dir.x = -scene.camera.viewport_width;
+//        int h_index = 0;
+//        while (ray.dir.x < scene.camera.viewport_width){
+
+//            colour = ray_color(&ray);
+//            put_pixel_to_img(h_index++,v_index,colour);
+//            ray.dir.x += (double) (2 * scene.camera.viewport_height) / HEIGHT;
+//        }
+//        v_index++;
+//        ray.dir.y += (double) (2 * scene.camera.viewport_height) / HEIGHT;
+//    }    
+//}
+
+void render_scene(t_scene scene) {
+    color colour;
+    //point3 intersection;
+    t_ray ray;
+    t_virtural_canvas canvas;
+    int h = 0;
+
+    canvas = make_virtural_canvas(scene.camera);
     ray.orig = convert_point3(scene.camera.coordinate);
-    ray.dir.y = -scene.camera.viewport_height;
-    ray.dir.z = 1;
-    int v_index = 0;
-    while (ray.dir.y < scene.camera.viewport_height) {
-        ray.dir.x = -scene.camera.viewport_width;
-        int h_index = 0;
-        while (ray.dir.x < scene.camera.viewport_width){
-
+    while (h < HEIGHT){
+        int w = 0;
+        while (w < WIDTH) {
+            /* BUNU */
+            ray.dir = get_point_at(canvas,w,h);
             colour = ray_color(&ray);
-            put_pixel_to_img(h_index++,v_index,colour);
-            ray.dir.x += (double) (2 * scene.camera.viewport_height) / HEIGHT;
+            put_pixel_to_img(w,h,colour);
+            w++;
         }
-        v_index++;
-        ray.dir.y += (double) (2 * scene.camera.viewport_height) / HEIGHT;
+        h++;
     }
-    
-    
 }
 
 //void render_scene(t_scene scene){
