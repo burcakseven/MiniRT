@@ -6,6 +6,7 @@
 #include <vec3/r_vec3.h>
 #include <ray/ray.h>
 #include <math.h>
+#include "../matrix/matrix.h"
 
 typedef struct	s_data {
 	void	*img;
