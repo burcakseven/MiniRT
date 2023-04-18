@@ -39,7 +39,8 @@ APP_SRC		= main.c \
 				vec3/r_vec3.c vec3/rotate_vec_xyz.c \
 				ray/ray.c \
 				render/render.c render/init_mlx.c render/make_virtural_canvas.c \
-				transform/transform.c
+				transform/transform.c\
+				utils/utils.c
 
 APP_OBJ		= $(APP_SRC:.c=.o)
 
