@@ -20,7 +20,8 @@ unsigned int rgb_color(color colour)
 	return(ir<< 16 | ig << 8 | ib);
 }
 
-double deg2rad(double degrees) {
+double deg2rad(double degrees)
+{
     return degrees * M_PI / 180.0;
 }
 
