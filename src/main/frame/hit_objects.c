@@ -23,15 +23,19 @@ double plane_const(const point3 center,point3 normalize_vec)
 
 double hit_plane(const point3 center, const point3 vec1, const t_ray r)
 {
-//vec1 is normal vector of plane
-    double t;
-    point3 vec2;
+    float *matrix;
+    float *temp;
+    float t;
+    t_ray new_r;
 
-    vec2= vec3_subtract(r.orig,center);
-    t = vec3_dot(&vec1, &vec2);
-    t += plane_const(center,vec1);
-    t *= -1;
-    t = t / vec3_dot(&vec1, &r.dir);
+    matrix = new(sizeof(float)*9);
+    temp = new(sizeof(float)*9);
+    temp = transformationMatrix(vec1.x,vec1.y,vec1.z,matrix);
+    matrix = matrix_inverse(temp);
+    del(temp);
+    new_r.orig = matrix_vector_multiply(matrix,r.orig);
+    new_r.dir = matrix_vector_multiply(matrix,r.dir);
+    t = new_r.orig.z / vec3_scale(new_r.dir,-1).z;
 
     return t;
 }
