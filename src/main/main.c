@@ -6,7 +6,6 @@
 #include <render/render.h>
 #include <ray/ray.h>
 #include <utils/utils.h>
-#include <transform/transform.h>
 
 t_canvas get_canvas(){
     static t_canvas *canvas = NULL;
@@ -25,14 +24,14 @@ t_canvas get_canvas(){
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate[0] = 1.0f;
-    camera.coordinate[1] = 2.0f;
-    camera.coordinate[2] = 14.0f;
+    camera.coordinate[0] = 0.0f;
+    camera.coordinate[1] = 0.0f;
+    camera.coordinate[2] = 5.0f;
     camera.v_orientation[0] = 0.0f;
     camera.v_orientation[1] = 0.0f;
     camera.v_orientation[2] = 1.0f;
 
-    camera.fov = 90;
+    camera.fov = 65;
     return camera;
 }
 
@@ -184,11 +183,6 @@ int	main(int ac, char **av)
 	//scene = create_scene(av[1]);
     render_scene(scene);
     show_img();
-    //t_vec3 vector1 = {1,1,1};
-    //t_vec3 vector_z_90 = rotate_xy(vector1,90.0);
-    //t_vec3 vector_x_90 = rotate_yz(vector1,90.0);
-    //printf("rotated in z 90 vec: (%Lf,%Lf,%Lf)\n",vector_z_90.x,vector_z_90.y,vector_z_90.z);
-    //printf("rotated in x 90 vec: (%Lf,%Lf,%Lf)\n",vector_x_90.x,vector_x_90.y,vector_x_90.z);
 
     return 0;
 }

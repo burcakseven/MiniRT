@@ -39,7 +39,7 @@ APP_SRC		= main.c \
 				vec3/r_vec3.c vec3/rotate_vec_xyz.c \
 				ray/ray.c \
 				render/render.c render/init_mlx.c render/make_virtural_canvas.c render/get_point_at.c \
-				transform/transform.c \
+				matrix/matrix.c \
 				utils/utils.c
 
 

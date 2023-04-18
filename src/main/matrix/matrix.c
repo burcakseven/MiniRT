@@ -1,14 +1,10 @@
-#include <ray.h>
-#include "../frame/frame.h"
-#include <gc.h>
-#include <scene.h>
+#include "matrix.h"
 
-void translation(point3 ray, point3 trans_data)
+t_vec3 translation(point3 ray, point3 trans_data)
 {
     return (vec3_add(ray,trans_data));
 }
 
-vec3_normalize
 
 float *transformationMatrix(float angleX, float angleY, float angleZ, float *matrix)
 {

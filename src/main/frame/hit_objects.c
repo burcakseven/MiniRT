@@ -25,7 +25,7 @@ double hit_plane(const point3 center, const point3 vec1, const t_ray r)
 {
     float *matrix;
     float *temp;
-    float t;
+    double t;
     t_ray new_r;
 
     matrix = new(sizeof(float)*9);
