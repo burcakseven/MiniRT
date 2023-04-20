@@ -119,7 +119,6 @@ int	main(int ac, char **av)
 	//scene = create_scene(av[1]);
     render_scene(scene);
     show_img();
-
     return 0;
 }
 #endif
