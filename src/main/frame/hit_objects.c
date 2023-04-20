@@ -28,7 +28,8 @@ double hit_plane(const point3 center, const point3 normal_vec, const t_ray r)
 }
 
 
-double hit_cylinder(const point3 center, const point3 normal_vec, const t_ray r)
+double hit_cylinder(const point3 center, const point3 normal_vec,\
+ const t_ray r, const double radius)
 {
 	double a;
 	double b;
@@ -38,7 +39,7 @@ double hit_cylinder(const point3 center, const point3 normal_vec, const t_ray r)
 	new_r = transformed_ray(normal_vec,r,1);
 	a = pow(new_r.dir.x,2) + pow(new_r.dir.y,2);
 	b = 2 *(new_r.orig.x * new_r.dir.x + new_r.orig.y * new_r.dir.y);
-	c = pow(new_r.orig.x,2) + pow(new_r.orig.y,2) - 1;
+	c = pow(new_r.orig.x,2) + pow(new_r.orig.y,2) - pow(radius,2);
 
 	return(discriminant(a,b,c));
 }
