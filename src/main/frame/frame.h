@@ -16,11 +16,18 @@ typedef struct	s_data {
 	int		endian;
 }              t_data;
 
+typedef struct	s_root {
+int		root_number;
+double	root1;
+double	root2;
+// double	discriminant;
+}              t_root;
+
 double deg2rad(double degrees);
 unsigned int rgb_color(color colour);
-int hit_sphere(const point3 center, double rad, const t_ray r);
-double hit_plane(const point3 center, const point3 vec1, const t_ray r);
-double hit_cylinder(const point3 center, const point3 normal_vec,\
- const t_ray r, const double radius);
+t_root hit_sphere(const point3 center, double rad, const t_ray r);
+t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray r);
+t_root hit_cylinder(point3 center, const point3 normal_vec,\
+ const t_ray r, const double radius, const double height);
 
 #endif
