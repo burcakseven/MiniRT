@@ -28,6 +28,7 @@ double deg2rad(double degrees);
 unsigned int rgb_color(color colour);
 double discriminant(double a,double b, double c);
 t_root roots(double a,double b, double discriminant);
+t_root root_control(t_root root);
 t_root hit_sphere(const point3 center, double rad, const t_ray r);
 t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray r);
 t_root hit_cylinder(point3 center, const point3 normal_vec,\
