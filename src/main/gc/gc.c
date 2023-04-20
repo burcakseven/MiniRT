@@ -25,19 +25,33 @@ static t_allocated *create_new_node(void *data) {
 	return node;
 }
 
+//static void append(void *data) {
+//	t_allocated *datas = get_allocated_datas();
+//	t_allocated *next = create_new_node(data);
+//	if (next == NULL)
+//		ft_error();
+//	if (datas->next == NULL) {
+//		datas->next = next;
+//		datas->prev = NULL;
+//	} else {
+//		next->prev = datas->prev;
+//		datas->prev->next = next;
+//		datas->prev = next;
+//	}
+//}
+
 static void append(void *data) {
-	t_allocated *datas = get_allocated_datas();
-	t_allocated *next = create_new_node(data);
-	if (next == NULL)
-		ft_error();
-	if (datas->next == NULL) {
-		datas->next = next;
-		datas->prev = next;
-	} else {
-		next->prev = datas->prev;
-		datas->prev->next = next;
-		datas->prev = next;
-	}
+    t_allocated *datas = get_allocated_datas();
+    t_allocated *new = create_new_node(data);
+    if (new == NULL)
+        ft_error();
+    if (datas->next == NULL) {
+        datas->next = new;
+    } else {
+        new->next = datas->next;
+		datas->next->prev = new;
+		datas->next = new;
+    }
 }
 
 void *new(size_t size) {
@@ -48,24 +62,45 @@ void *new(size_t size) {
 	return data;
 }
 
+//void del(void *ptr) {
+//	t_allocated *datas = get_allocated_datas()->next;
+//	while (datas != NULL) {
+//		if (datas->data == ptr) {
+//			if (datas->prev == NULL) {
+//				datas->next = datas->next->next;
+//				if (datas->next)
+//					datas->next->prev = NULL;
+//			} else {
+//				datas->prev->next = datas->next;
+//				if (datas->next)
+//					datas->next->prev = datas->prev;
+//			}
+//			free(datas);
+//			break;
+//		}
+//		datas = datas->next;
+//	}
+//}
+
 void del(void *ptr) {
-	t_allocated *datas = get_allocated_datas();
-	while (datas->next) {
-		if (datas->data == ptr) {
-			if (datas->prev == NULL) {
-				datas->next = datas->next->next;
-				if (datas->next)
-					datas->next->prev = NULL;
-			} else {
-				datas->prev->next = datas->next;
-				if (datas->next)
-					datas->next->prev = datas->prev;
-			}
-			free(datas);
-			break;
-		}
-		datas = datas->next;
-	}
+    t_allocated *datas = get_allocated_datas()->next;
+    while (datas != NULL) {
+        if (datas->data == ptr) {
+            if (datas->prev == NULL) {
+                get_allocated_datas()->next = datas->next;
+                if (datas->next)
+                    datas->next->prev = NULL;
+            } else {
+                datas->prev->next = datas->next;
+                if (datas->next)
+                    datas->next->prev = datas->prev;
+            }
+            free(datas->data);
+            free(datas);
+            break;
+        }
+        datas = datas->next;
+    }
 }
 
 void garbage_collect() {

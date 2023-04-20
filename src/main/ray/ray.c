@@ -3,6 +3,7 @@
 //
 
 #include <ray/ray.h>
+#include <frame/frame.h>
 
 t_ray make_ray(point3 origin, t_vec3 direction)
 {
@@ -39,7 +40,13 @@ color ray_color (const t_ray *r)
     double t;
     color added;
     point3 sp = {0,0,1};
-    if(hit_sphere(sp,0.5,*r))
+    // if(hit_sphere(sp,0.5,*r))
+    // {
+    //     color cl = {1, 0, 0};
+    //     //printf("MERH\nA");
+    //     return cl;
+    // }
+    if(hit_plane(sp,(point3){0,1,0},*r))
     {
         color cl = {1, 0, 0};
         //printf("MERH\nA");

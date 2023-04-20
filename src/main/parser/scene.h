@@ -8,6 +8,7 @@
 # include <math.h>
 # include <gc/gc.h>
 # include <assert.h>
+#include <matrix/matrix.h>
 
 # define MIN -2147483648
 # define MAX 2147483647
@@ -45,6 +46,7 @@ typedef struct	s_plane
 	float	coordinate[3];
 	float 	v_normal[3]; // Yüzeye dik olan açı vektör (birim vektör)
 	int		color;
+	float	*transform_matrix;
 }	t_plane;
 
 typedef struct	s_cylinder
@@ -54,6 +56,7 @@ typedef struct	s_cylinder
 	float	height;
 	float	diameter;
 	int		color;
+	float	*transform_matrix;
 } t_cylinder;
 
 typedef struct s_scene {

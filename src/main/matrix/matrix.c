@@ -1,22 +1,16 @@
-#include <ray.h>
-#include "../frame/frame.h"
-#include <gc.h>
-#include <scene.h>
+#include "matrix.h"
 
-void translation(point3 ray, point3 trans_data)
+t_vec3 translation(point3 ray, point3 trans_data)
 {
     return (vec3_add(ray,trans_data));
 }
 
-void calculateTransformationMatrix(float angleX, float angleY, float angleZ, float *matrix)
-{
-    float radX = deg2rad(angleX);
-    float radY = deg2rad(angleY);
-    float radZ =  deg2rad(angleZ);
 
-    float cosX = cos(radX), sinX = sin(radX);
-    float cosY = cos(radY), sinY = sin(radY);
-    float cosZ = cos(radZ), sinZ = sin(radZ);
+float *transformationMatrix(float angleX, float angleY, float angleZ, float *matrix)
+{
+    float cosX = cos(angleX), sinX = sin(angleX);
+    float cosY = cos(angleY), sinY = sin(angleY);
+    float cosZ = cos(angleZ), sinZ = sin(angleZ);
 
     matrix[0] = cosY * cosZ;
     matrix[1] = -cosX * sinZ + sinX * sinY * cosZ;
@@ -29,30 +23,36 @@ void calculateTransformationMatrix(float angleX, float angleY, float angleZ, flo
     matrix[6] = -sinY;
     matrix[7] = sinX * cosY;
     matrix[8] = cosX * cosY;
+    return matrix;
 }
 
-float [3][3]matrix_inverse(float matrix[3][3])
+float *matrix_inverse(float matrix[9])
 {
-    float **inverse = (float **)new(sizeof(float *) * 3);
-    int i = 0;
-    while (i < 3)
-        inverse[i++] = (float *)new(sizeof(float) * 3);//malloc kısmı başka fonksiyona taşınabilir
-
-    float det = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) -
-                matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
-                matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+    float *inverse = new(sizeof(float)*9);
+    float det = matrix[0] * (matrix[4] * matrix[8] - matrix[5] * matrix[7]) -
+                matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) +
+                matrix[2] * (matrix[3] * matrix[7] - matrix[4] * matrix[6]);
     if (det == 0)
         ft_error();
 
     float inv_det = 1.0 / det;
-    inverse[0][0] = (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2]) * inv_det;
-    inverse[0][1] = (matrix[0][2] * matrix[2][1] - matrix[0][1] * matrix[2][2]) * inv_det;
-    inverse[0][2] = (matrix[0][1] * matrix[1][2] - matrix[0][2] * matrix[1][1]) * inv_det;
-    inverse[1][0] = (matrix[1][2] * matrix[2][0] - matrix[1][0] * matrix[2][2]) * inv_det;
-    inverse[1][1] = (matrix[0][0] * matrix[2][2] - matrix[0][2] * matrix[2][0]) * inv_det;
-    inverse[1][2] = (matrix[0][2] * matrix[1][0] - matrix[0][0] * matrix[1][2]) * inv_det;
-    inverse[2][0] = (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]) * inv_det;
-    inverse[2][1] = (matrix[0][1] * matrix[2][0] - matrix[0][0] * matrix[2][1]) * inv_det;
-    inverse[2][2] = (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]) * inv_det;
+    inverse[0] = (matrix[4] * matrix[8] - matrix[5] * matrix[7]) * inv_det;
+    inverse[1] = (matrix[2] * matrix[7] - matrix[1] * matrix[8]) * inv_det;
+    inverse[2] = (matrix[1] * matrix[5] - matrix[2] * matrix[4]) * inv_det;
+    inverse[3] = (matrix[5] * matrix[6] - matrix[3] * matrix[8]) * inv_det;
+    inverse[4] = (matrix[0] * matrix[8] - matrix[2] * matrix[6]) * inv_det;
+    inverse[5] = (matrix[2] * matrix[3] - matrix[0] * matrix[5]) * inv_det;
+    inverse[6] = (matrix[3] * matrix[7] - matrix[4] * matrix[6]) * inv_det;
+    inverse[7] = (matrix[1] * matrix[6] - matrix[0] * matrix[7]) * inv_det;
+    inverse[8] = (matrix[0] * matrix[4] - matrix[1] * matrix[3]) * inv_det;
     return inverse;
+}
+
+t_vec3 matrix_vector_multiply(float matrix[9], t_vec3 vector)
+{
+    t_vec3 result;
+    result.x = matrix[0] * vector.x + matrix[1] * vector.y + matrix[2] * vector.z;
+    result.y = matrix[3] * vector.x + matrix[4] * vector.y + matrix[5] * vector.z;
+    result.z = matrix[6] * vector.x + matrix[7] * vector.y + matrix[8] * vector.z;
+    return result;
 }
