@@ -1,30 +1,5 @@
 #include "frame.h"
 
-double discriminant(double a,double b, double c)
-{
-	return (b * b - 4 * a * c);
-}
-
-t_root roots(double a,double b, double discriminant)
-{
-	t_root root;
-	if(discriminant < 0)
-		root.root_number = 0;
-	else if (discriminant == 0 )
-	{
-		root.root_number = 1;
-		root.root1 = -b / (-2 * a);
-	}
-	else
-	{
-		root.root_number = 2;
-		root.root1 = (-b + sqrt(discriminant)) / (-2 * a);
-		root.root2 = (-b - sqrt(discriminant)) / (-2 * a);
-	}
-	// root.discriminant;
-	return root;
-}
-
 t_root hit_sphere(const point3 center, double rad, const t_ray r)
 {
     t_vec3 oc;
@@ -36,17 +11,32 @@ t_root hit_sphere(const point3 center, double rad, const t_ray r)
     return (roots(a,b,discriminant(a,b,c)));
 }
 
-
 t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
 {
-	t_root root;
-	t_ray new_ray;
-	new_ray = transformed_ray(normal_vec,ray,1);
-	
-	root.root_number = 1;
-    root.root1 = new_ray.orig.z / vec3_scale(new_ray.dir,-1).z;
+	t_root	root;
+	t_ray	new_ray;
+	double	t;
+	double	u;
+	double	v;
 
-    return root;
+	new_ray = transformed_ray(normal_vec,ray,1);
+	if(!is_equal(new_ray.dir.z,0.0))
+	{
+		t = new_ray.orig.z / vec3_scale(new_ray.dir,-1).z;
+		if(t > 0.0)
+		{
+			u = new_ray.orig.x + (new_ray.dir.x * t);
+			v = new_ray.orig.y + (new_ray.dir.y * t);
+			if(fabs(u) < 1.0 && fabs(v) < 1.0)
+			{
+				root.root_number = 1;
+				root.root1 = t;
+				return (root);
+			}
+		}
+	}
+		root.root_number = 0;
+    return (root);
 }
 
 t_root hit_cylinder(point3 center, const point3 normal_vec,\
@@ -71,7 +61,6 @@ t_root root_control(t_root root) // ne döndürsem?
 {
 	t_root root;
 
-	// root = hit_sphere(shpere.coordinate, shpere.diameter, r);//şu an işe yaramıyor parser değişinde yarar
 	if(root.root_number == 0)
 		return root;
 	else if (root.root1 < 0 || root.root2 < 0)

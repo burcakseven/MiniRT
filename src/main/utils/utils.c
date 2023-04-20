@@ -12,3 +12,10 @@ point3 convert_point3(float coordinate[3]){
     point.z = (long double) coordinate[2];
 	return (point);
 }
+
+int is_equal(double first, double second)
+{
+    if(fabs(first-second) < __DBL_EPSILON__)
+        return (1);
+    return (0);
+}
