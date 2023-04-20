@@ -33,8 +33,9 @@ double hit_plane(const point3 center, const point3 vec1, const t_ray r)
     temp = transformationMatrix(vec1.x,vec1.y,vec1.z,matrix);
     matrix = matrix_inverse(temp);
     del(temp);
-    new_r.orig = matrix_vector_multiply(matrix,r.orig);
     new_r.dir = matrix_vector_multiply(matrix,r.dir);
+    new_r.dir = vec3_normalize(new_r.dir);
+    new_r.orig = matrix_vector_multiply(matrix,r.orig);
     t = new_r.orig.z / vec3_scale(new_r.dir,-1).z;
 
     return t;
