@@ -21,38 +21,38 @@ typedef struct	s_ambient
 }	t_ambient;
 
 typedef struct s_camera {
-	float 	coordinate[3];
-	float	v_orientation[3]; // between [0-1]
+	point3 	coordinate;
+	t_vec3 	v_orientation; // between [0-1]
 	int		fov; // between [0-180]
     float   viewport_height;
     float   viewport_width;
 }	t_camera;
 
 typedef struct s_light {
-	float	coordinate[3]; 
+	point3 	coordinate;
 	float	brightness; //value between [0 - 1]
 	int		color; //0xAABBCC
 }	t_light;
 
 typedef struct	s_sphere
 {
-	float	coordinate[3];
+	point3 	coordinate;
 	float	diameter;
 	int		color;
 }	t_sphere;
 
 typedef struct	s_plane
 {
-	float	coordinate[3];
-	float 	v_normal[3]; // Yüzeye dik olan açı vektör (birim vektör)
+	point3 	coordinate;
+	t_vec3 	v_normal; // Yüzeye dik olan açı vektör (birim vektör)
 	int		color;
 	float	*transform_matrix;
 }	t_plane;
 
 typedef struct	s_cylinder
 {
-	float	coordinate[3];
-	float 	v_axis[3]; // Yüzeye dik olan açı vektör (birim vektör)
+	point3 	coordinate;
+	t_vec3 	v_axis; // Yüzeye dik olan açı vektör (birim vektör)
 	float	height;
 	float	diameter;
 	int		color;

@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "utils/utils.h"
 
 void ambient_data(t_ambient *ambient, char *line)
 {
@@ -14,15 +15,20 @@ void ambient_data(t_ambient *ambient, char *line)
 
 void camera_data(t_camera *camera, char *line)
 {
-  if(camera->fov)
+    float coordinate[3];
+    float v_orientation[3];
+
+    if(camera->fov)
     ft_error();
-  fill_coordinate(&line, &camera->coordinate, MIN, MAX);
-  fill_coordinate(&line, &camera->v_orientation, -1, 1);
-  camera->fov = (int)ft_atof(&line);
-  if(camera->fov < 0 || camera->fov > 180)
-    ft_error();
-  if(*line != '\0' && *line != '\n')
-    ft_error();
+    fill_coordinate(&line, &coordinate, MIN, MAX);
+    fill_coordinate(&line, &v_orientation, -1, 1);
+    camera->fov = (int)ft_atof(&line);
+    camera->coordinate = convert_point3(coordinate);
+    camera->v_orientation = convert_point3(v_orientation);
+    if(camera->fov < 0 || camera->fov > 180)
+        ft_error();
+    if(*line != '\0' && *line != '\n')
+        ft_error();
 }
 
 

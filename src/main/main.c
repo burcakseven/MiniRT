@@ -24,12 +24,12 @@ t_canvas get_canvas(){
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate[0] = 0.0f;
-    camera.coordinate[1] = 0.0f;
-    camera.coordinate[2] = 5.0f;
-    camera.v_orientation[0] = 0.0f;
-    camera.v_orientation[1] = 0.0f;
-    camera.v_orientation[2] = 1.0f;
+    camera.coordinate.x = 0.0f;
+    camera.coordinate.y = 0.0f;
+    camera.coordinate.z = 5.0f;
+    camera.v_orientation.x = 0.0f;
+    camera.v_orientation.y = 0.0f;
+    camera.v_orientation.z = 1.0f;
 
     camera.fov = 65;
     return camera;
@@ -39,12 +39,12 @@ t_cylinder create_cylinder(){
 
     t_cylinder cylinder;
     cylinder.color = 0xFF0000;
-    cylinder.coordinate[0] = 1.0f;
-    cylinder.coordinate[1] = 1.0f;
-    cylinder.coordinate[2] = 1.0f;
-    cylinder.v_axis[0] = 0.0f;
-    cylinder.v_axis[1] = 1.0f;
-    cylinder.v_axis[2] = 0.0f;
+    cylinder.coordinate.x = 1.0f;
+    cylinder.coordinate.y = 1.0f;
+    cylinder.coordinate.z = 1.0f;
+    cylinder.v_axis.x = 0.0f;
+    cylinder.v_axis.y = 1.0f;
+    cylinder.v_axis.z = 0.0f;
     cylinder.diameter = 0.5f;
     cylinder.height = 1.0f;
     return cylinder;
@@ -85,7 +85,7 @@ void render_scene(t_scene scene) {
     int h = 0;
 
     canvas = make_virtural_canvas(scene.camera);
-    ray.orig = convert_point3(scene.camera.coordinate);
+    ray.orig = scene.camera.coordinate;
     while (h < HEIGHT){
         int w = 0;
         while (w < WIDTH) {
