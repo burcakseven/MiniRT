@@ -20,19 +20,17 @@ point3 ray_at(t_ray r, double t) {
     return result;
 }
 
-int hit_sphere(const point3 center, double rad, const t_ray r)
+t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag)
 {
-    t_vec3 oc;
+    float *matrix;
+    t_ray new_r;
 
-    oc = vec3_subtract(r.orig,center);
-    double a = vec3_dot(&r.dir, &r.dir);
-    double b = 2.0 * vec3_dot(&oc, &r.dir);
-    double c = vec3_dot(&oc,&oc) - rad*rad;
-    double discr =(b*b) -(4*a*c);
-    // if(discr >= 0)
-    //     return 1;
-    // return 0;
-    return (discr > 0);
+	matrix = init_matrix(normal_vec,inverse_flag);
+    new_r.dir = matrix_vector_multiply(matrix,r.dir);
+    new_r.dir = vec3_normalize(new_r.dir);
+    new_r.orig = matrix_vector_multiply(matrix,r.orig);
+    del(matrix);
+    return new_r;
 }
 
 color ray_color (const t_ray *r)

@@ -56,3 +56,18 @@ t_vec3 matrix_vector_multiply(float matrix[9], t_vec3 vector)
     result.z = matrix[6] * vector.x + matrix[7] * vector.y + matrix[8] * vector.z;
     return result;
 }
+
+float *init_matrix(point3 normal_vec, int inverse_flag)
+{
+    float *matrix;
+    float *temp;
+
+	matrix = new(sizeof(float)*9);
+	temp = new(sizeof(float)*9);
+	temp = transformationMatrix(normal_vec.x,\
+		normal_vec.y,normal_vec.z,matrix);
+    if(inverse_flag == 1)
+        matrix = matrix_inverse(temp);
+	del(temp);
+	return matrix;
+}
