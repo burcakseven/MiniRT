@@ -21,7 +21,7 @@ t_root roots(double a,double b, double discriminant)
 		root.root1 = (-b + sqrt(discriminant)) / (-2 * a);
 		root.root2 = (-b - sqrt(discriminant)) / (-2 * a);
 	}
-	root.discriminant;
+	// root.discriminant;
 	return root;
 }
 
@@ -37,11 +37,12 @@ t_root hit_sphere(const point3 center, double rad, const t_ray r)
 }
 
 
-t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)// buna bak
+t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
 {
 	t_root root;
 	t_ray new_ray;
 	new_ray = transformed_ray(normal_vec,ray,1);
+	
 	root.root_number = 1;
     root.root1 = new_ray.orig.z / vec3_scale(new_ray.dir,-1).z;
 

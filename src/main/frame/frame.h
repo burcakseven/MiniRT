@@ -20,7 +20,7 @@ typedef struct	s_root {
 int		root_number;
 double	root1;
 double	root2;
-double	discriminant;
+// double	discriminant;
 }              t_root;
 
 double deg2rad(double degrees);
