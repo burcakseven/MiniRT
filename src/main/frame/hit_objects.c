@@ -57,15 +57,24 @@ t_root hit_cylinder(point3 center, const point3 normal_vec,\
 	return(roots(a,b,discriminant(a,b,c)));
 }
 
+void swap_roots(t_root *root)
+{
+	double temp;
+	if(root->root1 < root->root2)
+		return ;
+	temp = root->root1;
+	root->root1 = root->root2;
+	root->root2 = temp;
+}
+
 t_root root_control(t_root root) // ne döndürsem?
 {
-	t_root root;
-
 	if(root.root_number == 0)
 		return root;
 	else if (root.root1 < 0 || root.root2 < 0)
 	{
 		root.root_number = 0;
 	}
-		return root;
+	swap_roots(&root);
+	return root;
 }

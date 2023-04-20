@@ -7,7 +7,7 @@
 #include <ray/ray.h>
 #include <math.h>
 #include <matrix/matrix.h>
-#include <utils.h>
+#include <utils/utils.h>
 
 typedef struct	s_data {
 	void	*img;
