@@ -34,7 +34,7 @@ DEPENDENTS	= $(addprefix $(LIB_FOLD), $(DEP_LIBS))
 APP_SRC		= main.c \
 				frame/frame.c frame/hit_objects.c frame/root_op.c \
 				get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
-				parser/file_op.c parser/scene_parser.c parser/scene.c parser/utils.c parser/edit_line_utils.c parser/data_placement.c parser/objects.c \
+				parser/file_op.c parser/scene_parser.c parser/scene.c parser/utils.c parser/edit_line_utils.c parser/data_placement.c parser/objects.c parser/create_scene.c \
 				gc/gc.c \
 				vec3/r_vec3.c vec3/rotate_vec_xyz.c \
 				ray/ray.c \
