@@ -46,7 +46,6 @@ typedef struct	s_plane
 	point3 	coordinate;
 	t_vec3 	v_normal; // Yüzeye dik olan açı vektör (birim vektör)
 	int		color;
-	float	*transform_matrix;
 }	t_plane;
 
 typedef struct	s_cylinder
@@ -56,7 +55,6 @@ typedef struct	s_cylinder
 	float	height;
 	float	diameter;
 	int		color;
-	float	*transform_matrix;
 } t_cylinder;
 
 typedef struct s_scene {
