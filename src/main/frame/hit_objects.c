@@ -15,15 +15,15 @@ t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
 {
 	t_root	root;
 	t_ray	new_ray;
-	double	t;
+	long double	t;
 	double	u;
 	double	v;
 
 	new_ray = transformed_ray(normal_vec,ray,1);
 	if(!is_equal(new_ray.dir.z,0.0))
 	{
-		t = new_ray.orig.z / vec3_scale(new_ray.dir,-1).z;
-		if(t) // t yapınca geçiyo t>0.0 yapınca geçmiyo casting sıkıntısı var bence
+		t = (new_ray.orig.z / (-1 * vec3_normalize(new_ray.dir).z));
+		if(t > 0.0) // t yapınca geçiyo t>0.0 yapınca geçmiyo casting sıkıntısı var bence
 		{
 			u = new_ray.orig.x + (new_ray.dir.x * t);
 			v = new_ray.orig.y + (new_ray.dir.y * t);
