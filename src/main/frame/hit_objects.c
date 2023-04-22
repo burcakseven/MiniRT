@@ -22,7 +22,7 @@ t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
 	new_ray = transformed_ray(normal_vec,ray,1);
 	if(!is_equal(new_ray.dir.z,0.0))
 	{
-		t = (new_ray.orig.z / (-1 * vec3_normalize(new_ray.dir).z));
+		t = (-1 * new_ray.orig.z / new_ray.dir.z );
 		if(t > 0.0) // t yapınca geçiyo t>0.0 yapınca geçmiyo casting sıkıntısı var bence
 		{
 			u = new_ray.orig.x + (new_ray.dir.x * t);
