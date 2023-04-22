@@ -24,14 +24,14 @@ t_canvas get_canvas(){
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate.x = 0.0f;
+    camera.coordinate.x = 3.0f;
     camera.coordinate.y = 0.0f;
-    camera.coordinate.z = 5.0f;
-    camera.v_orientation.x = 0.0f;
+    camera.coordinate.z = 4.0f;
+    camera.v_orientation.x = 1.0f;
     camera.v_orientation.y = 0.0f;
-    camera.v_orientation.z = 1.0f;
+    camera.v_orientation.z = 0.0f;
 
-    camera.fov = 65;
+    camera.fov = 90;
     return camera;
 }
 
@@ -54,8 +54,8 @@ t_cylinder create_cylinder(){
  * For cylinder
  * @return
  */
-point3 find_intercept(t_ray ray, t_sphere sphere, color *colour){
-	point3 point;
+t_point3 find_intercept(t_ray ray, t_sphere sphere, t_color *colour){
+	t_point3 point;
 	(void) ray;
 	(void) sphere;
 	(void) colour;
@@ -69,7 +69,7 @@ point3 find_intercept(t_ray ray, t_sphere sphere, color *colour){
 /**
  * reduce colour according to relation between light source and interception point
 */
-void reduce_color(t_light light, point3 intercept, color *colour){
+void reduce_color(t_light light, t_point3 intercept, t_color *colour){
     (void) light;
     (void) intercept;
     (void) colour;
@@ -78,7 +78,7 @@ void reduce_color(t_light light, point3 intercept, color *colour){
 }
 
 void render_scene(t_scene scene) {
-    color colour;
+    t_color colour;
     //point3 intersection;
     t_ray ray;
     t_virtural_canvas canvas;
@@ -116,7 +116,8 @@ int	main(int ac, char **av)
 {
     t_scene scene;
     t_cylinder cylinder = create_cylinder();
-	scene = create_scene(av[1]);
+	scene.camera = create_camera();
+	//scene = create_scene(av[1]);
     render_scene(scene);
     show_img();
     return 0;

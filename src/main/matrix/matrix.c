@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-t_vec3 translation(point3 ray, point3 trans_data)
+t_vec3 translation(t_point3 ray, t_point3 trans_data)
 {
     return (vec3_add(ray,trans_data));
 }
@@ -57,7 +57,7 @@ t_vec3 matrix_vector_multiply(float matrix[9], t_vec3 vector)
     return result;
 }
 
-float *init_matrix(point3 normal_vec, int inverse_flag)
+float *init_matrix(t_point3 normal_vec, int inverse_flag)
 {
     float *matrix;
     float *temp;

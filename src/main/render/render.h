@@ -30,24 +30,24 @@ typedef struct	s_mlx {
 
 typedef struct s_virtural_canvas
 {
-	point3	norm_k;
-	point3	norm_i;
-	point3	norm_j;
+	t_point3	norm_k;
+	t_point3	norm_i;
+	t_point3	norm_j;
 	t_ray	canva_h;
 	t_ray	canva_v;
 	t_vec3	v_unit_v;
 	t_vec3	v_unit_h;
 	int		width;
 	int		height;
-	point3	v_camera;
+	t_point3	v_camera;
 } t_virtural_canvas;
 
 
 t_canvas	get_canvas();
-int			put_pixel_to_img(int x, int y, color colour);
+int			put_pixel_to_img(int x, int y, t_color colour);
 void		print_img();
 t_mlx		get_mlx();
 t_virtural_canvas	make_virtural_canvas(t_camera camera);
-point3		get_point_at(t_virtural_canvas c, int x, int y);
+t_point3		get_point_at(t_virtural_canvas c, int x, int y);
 
 #endif //MINIRT_RENDER_H

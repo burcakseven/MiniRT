@@ -25,13 +25,14 @@ double	root2;
 }              t_root;
 
 double deg2rad(double degrees);
-unsigned int rgb_color(color colour);
+unsigned int rgb_color(t_color colour);
 double discriminant(double a,double b, double c);
 t_root roots(double a,double b, double discriminant);
 t_root root_control(t_root root);
-// double hit_plane(const point3 center, const point3 vec1, const t_ray r);
-t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray r);
-t_root hit_cylinder(point3 center, const point3 normal_vec,\
+// double hit_plane(const t_point3 center, const point3 vec1, const t_ray r);
+t_root hit_sphere(const t_point3 center, double rad, const t_ray r)
+t_root hit_plane(const t_point3 center, const t_point3 normal_vec, const t_ray r);
+t_root hit_cylinder(t_point3 center, const t_point3 normal_vec,\
  const t_ray r, const double radius, const double height);
 
 #endif

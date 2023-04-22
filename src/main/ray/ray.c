@@ -5,7 +5,7 @@
 #include <ray/ray.h>
 #include <frame/frame.h>
 
-t_ray make_ray(point3 origin, t_vec3 direction)
+t_ray make_ray(t_point3 origin, t_vec3 direction)
 {
     t_ray r;
     vec3_init(&r.orig, origin.x, origin.y, origin.z);
@@ -13,14 +13,14 @@ t_ray make_ray(point3 origin, t_vec3 direction)
     return r;
 }
 
-point3 ray_at(t_ray r, double t) {
+t_point3 ray_at(t_ray r, double t) {
     t_vec3 result;
     result = vec3_scale(r.dir, t);
     result = vec3_add(r.orig, result);
     return result;
 }
 
-t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag)
+t_ray transformed_ray(t_point3 normal_vec, t_ray r, int inverse_flag)
 {
     float *matrix;
     t_ray new_r;
@@ -33,27 +33,33 @@ t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag)
     return new_r;
 }
 
-color ray_color (const t_ray *r)
+t_color ray_color (const t_ray *r)
 {
     double t;
-    color added;
-    point3 sp = {0,0,10};
+    t_color added;
+    t_point3 sp = {0,0,1};
     // if(hit_sphere(sp,0.5,*r).root_number)
     // {
-    //     color cl = {1, 0, 0};
+    //     t_color cl = {1, 0, 0};
     //     //printf("MERH\nA");
     //     return cl;
     // }
     // double num = root_control(hit_plane(sp,(point3){0,0,1},*r)).root_number;
-    if(hit_plane(sp,(point3){0,0,1},*r).root_number)
+    if(hit_plane(sp,(t_point3){0,0,1},*r).root_number)
     {
-        color cl = {1, 0, 0};
+        t_color cl = {1, 0, 0};
+        //printf("MERH\nA");
+        return cl;
+    }
+	if(hit_cylinder(sp,(t_point3){0,1,0},*r,0.1,10).root_number)
+    {
+        t_color cl = {1, 0, 0};
         //printf("MERH\nA");
         return cl;
     }
     t = 0.5 *(r->dir.y) +1.0;
-    color full = {1.0,1.0,1.0};
-    color blue = {0.5, 0.7, 1.0};
+    t_color full = {1.0,1.0,1.0};
+    t_color blue = {0.5, 0.7, 1.0};
 
     added = vec3_add(vec3_scale(full,(1.0-t)),vec3_scale(blue, t));
     return  added;

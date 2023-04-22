@@ -9,10 +9,10 @@ typedef struct s_ray
     t_vec3 dir;
 } t_ray;
 
-t_ray make_ray(point3 origin, t_vec3 direction);
+t_ray make_ray(t_point3 origin, t_vec3 direction);
 t_vec3 ray_at(t_ray r, double t);
-color ray_color (const t_ray *r);
-t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag);
+t_color ray_color (const t_ray *r);
+t_ray transformed_ray(t_point3 normal_vec, t_ray r, int inverse_flag);
 
 //point3  fint_intersect(t_ray ray, t_scene scene, color *colour);
 

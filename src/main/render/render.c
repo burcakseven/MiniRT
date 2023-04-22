@@ -5,7 +5,7 @@
 #include "frame/frame.h"
 
 
-int put_pixel_to_img(int x, int y,color colour) {
+int put_pixel_to_img(int x, int y,t_color colour) {
     t_canvas    canvas;
     int         offset;
     char        *dest;

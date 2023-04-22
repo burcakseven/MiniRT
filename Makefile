@@ -36,7 +36,7 @@ APP_SRC		= main.c \
 				get_next_line/get_next_line_utils.c get_next_line/get_next_line.c  \
 				parser/file_op.c parser/scene_parser.c parser/scene.c parser/utils.c parser/edit_line_utils.c parser/data_placement.c parser/objects.c parser/create_scene.c \
 				gc/gc.c \
-				vec3/r_vec3.c vec3/rotate_vec_xyz.c \
+				vec3/r_vec3.c \
 				ray/ray.c \
 				render/render.c render/init_mlx.c render/make_virtural_canvas.c render/get_point_at.c \
 				matrix/matrix.c \

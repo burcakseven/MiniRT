@@ -5,7 +5,7 @@
 
 long double to_rad(long double degrees);
 
-point3 convert_point3(float coordinate[3]);
 int is_equal(double first, double second);
+t_point3 convert_point3(float coordinate[3]);
 
 #endif

@@ -1,6 +1,6 @@
 #include "frame.h"
 
-t_root hit_sphere(const point3 center, double rad, const t_ray r)
+t_root hit_sphere(const t_point3 center, double rad, const t_ray r)
 {
     t_vec3 oc;
 
@@ -11,7 +11,7 @@ t_root hit_sphere(const point3 center, double rad, const t_ray r)
     return (roots(a,b,discriminant(a,b,c)));
 }
 
-t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
+t_root hit_plane(const t_point3 center, const t_point3 normal_vec, const t_ray ray)
 {
 	t_root	root;
 	t_ray	new_ray;
@@ -39,7 +39,7 @@ t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray ray)
     return (root);
 }
 
-t_root hit_cylinder(point3 center, const point3 normal_vec,\
+t_root hit_cylinder(t_point3 center, const t_point3 normal_vec,\
  const t_ray ray, const double radius, const double height) // sınırsız silindir?
 {
 	double a;

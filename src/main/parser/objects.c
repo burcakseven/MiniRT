@@ -1,18 +1,28 @@
 #include "scene.h"
 #include "utils/utils.h"
 
-void sphere_data(t_sphere **sphere, char *line)
+void sphere_data(t_container_sp **sphere, char *line)
 {
-    static int sp = 0;
+	t_sphere *temp_sp;
+	t_container_sp *container;
     float coordinate[3];
 
-    t_sphere *temp_sp = sphere[sp];
+
+	printf("begining of func");
+    temp_sp = new(sizeof *temp_sp);
+	container = new(sizeof *container);
     fill_coordinate(&line ,&coordinate, MIN,MAX);
     temp_sp->diameter = ft_atof(&line);
     temp_sp->coordinate = convert_point3(coordinate);
+
+	printf("strops\n");
     line = remove_first_last_spaces(line);
     temp_sp->color = fill_rgb(&line);
-    sp++;
+	container->content = temp_sp;
+    (*sphere)->next = container;
+	container->prev = *sphere;
+	*sphere = container;
+	printf("end of func");
 }
 
 void plane_data(t_plane **plane, char *line)
