@@ -6,13 +6,14 @@
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate = (t_point3){0.0,-10.0,0.0};
-    camera.v_orientation = (t_point3){0.0, 0.0, 0.0};
+    camera.coordinate = (t_point3){3.0,2.0,1.0};
+    camera.v_orientation = vec3_normalize((t_point3){0.0, 1.0, 0.0});
     camera.up = (t_point3){0.0,0.0,1.0};
     camera.lenght = 1.0;
     camera.HorzSize = 0.25;
     camera.apRatio = 16/9;
-    // camera.fov = 90;
+    camera.fov = 90;
+	camera.look_at = vec3_add(camera.coordinate, camera.v_orientation);
     return camera;
 }
 
@@ -51,7 +52,7 @@ int main(int ac, char **av){
 	//scene = create_scene(av[1]);
 	printf("HELLO WORLD!!\n");
 	scene.camera = create_camera();
-	scene.camera = update_camera(scene.camera);
+	//scene.camera = update_camera(scene.camera);
 	render_scene(scene);
 	print_img();
 }
