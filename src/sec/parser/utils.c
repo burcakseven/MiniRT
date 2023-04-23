@@ -1,4 +1,6 @@
 #include "parser.h"
+#include <libft.h>
+#include <fcntl.h>
 
 char	*remove_first_last_spaces(char	*str)
 {
@@ -30,4 +32,14 @@ int ft_compare(char *source1, char *source2)
     if(ft_strncmp(source1,source2,len) == 0)
         return (1);
     return (0);
+}
+
+int		try_open(char *file){
+	char	*ext;
+
+	ext = ".rt";
+	if (ft_strncmp(ft_strrchr(file, '.'),ext,ft_strlen(ext)+1) != 0)
+		return (-1);
+	
+	return (open(file,O_RDONLY));
 }
