@@ -27,11 +27,11 @@ typedef struct s_camera {
     float		viewport_width;
 }	t_camera;
 
-typedef struct s_light {
+typedef struct	s_light {
 	t_point3 	coordinate;
-	float	brightness; //value between [0 - 1]
+	long double	brightness; //value between [0 - 1]
 	t_color	color; //0xAABBCC
-}	t_light;
+}				t_light;
 
 typedef struct	s_sphere
 {

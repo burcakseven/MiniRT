@@ -3,6 +3,7 @@
 #include <objects/objects.h>
 #include <stdio.h>
 #include <utils/utils.h>
+#include "../light/light.h"
 
 
 t_bool get_screen_point(t_camera camera, int screen_x, int screen_y, t_ray *camera_ray) {
@@ -56,10 +57,17 @@ t_bool get_screen_point(t_camera camera, int screen_x, int screen_y, t_ray *came
 void render_scene(t_scene scene){
 	t_virtural_canvas c;
 	t_ray ray;
-	t_color color;
 	t_intersection intersect;
 	int x_index;
 	int y_index;
+	double min = 1e6;
+	double max = 0.0;
+
+	/* light */
+	t_light light;
+	light.brightness = 1.0;
+	light.color = (t_vec3){255.0, 255.0, 255.0};
+	light.coordinate = (t_vec3){5.0, -10.0, -5.0};
 
 	c = make_virtural_canvas(scene.camera);
 	y_index = 0;
@@ -70,12 +78,27 @@ void render_scene(t_scene scene){
 			//printf("(%Lf,%Lf,%Lf)->(%Lf,%Lf,%Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
 			if(intersec_sphere(ray, &intersect))
 			{
-				color = (t_color){1,0,0};
-				put_pixel_to_img(x_index, y_index, color);
+				double dist = vec3_length(vec3_subtract(intersect.int_point, ray.orig));
+				if(dist > max)
+					max = dist;
+				if (dist < min)
+					min = dist;
+				intersect.local_normal = vec3_normalize(intersect.int_point);
+				if(computeIllumin(intersect, &light))
+				{
+					long double red = 255*light.brightness;
+					t_color color = (t_color){red,0,0};
+					// exit(1);
+					put_pixel_to_img(x_index, y_index, color);
+				}
+				else{
+				t_color color = (t_color){0,0,0};
+					put_pixel_to_img(x_index, y_index, color);
+					}
 			}
 			else
 			{
-				color = (t_color){1,1,1};
+				t_color color = (t_color){255,255,255};
 				put_pixel_to_img(x_index, y_index, color);
 			}
 			x_index++;

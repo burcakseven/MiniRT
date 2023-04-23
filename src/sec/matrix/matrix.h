@@ -2,6 +2,10 @@
 #define MATRIX_H
 
 #include <ray/ray.h>
+#include <vec3/vec3.h>
+#include <math.h>
+#include <gc/gc.h>
+#include <utils/utils.h>
 
 float *transformationMatrix(float angleX, float angleY, float angleZ, float *matrix);
 float *matrix_inverse(float matrix[9]);

@@ -5,14 +5,14 @@
 
 static unsigned int rgb_color(t_color colour)
 {
-    int ir;
-	int ig;
-	int ib;
+    // int ir;
+	// int ig;
+	// int ib;
 
-	ir = (int)(255.999 * colour.x);
-    ig = (int)(255.999 * colour.y);
-    ib = (int)(255.999 * colour.z);
-	return(ir<< 16 | ig << 8 | ib);
+	// ir = (int)(255.999 * colour.x);
+    // ig = (int)(255.999 * colour.y);
+    // ib = (int)(255.999 * colour.z);
+	return((int)colour.x << 16 | (int)colour.y << 8 | (int)colour.z);
 }
 
 
