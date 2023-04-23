@@ -11,6 +11,7 @@ typedef struct	s_intersection
 	t_vec3	int_point;
 	t_vec3	local_normal;
 	t_vec3	local_color;
+	double	int_param;
 	double	discriminant;
 }				t_intersection;
 

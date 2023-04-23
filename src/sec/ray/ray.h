@@ -8,7 +8,8 @@ typedef struct s_ray
 {
     t_vec3 orig;
     t_vec3 dir;
-    t_vec3 diff; //orijine göre ray direction 
+    t_vec3 diff; //orijine göre ray direction
+    t_vec3 diff_normal;
 } t_ray;
 
 t_ray make_ray(t_point3 origin, t_vec3 direction);

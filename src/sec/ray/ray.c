@@ -12,6 +12,7 @@ t_ray make_ray(t_point3 origin, t_vec3 direction)
     vec3_init(&r.orig, origin.x, origin.y, origin.z);
     vec3_init(&r.dir, direction.x, direction.y, direction.z);
     r.diff = vec3_subtract(r.dir, r.orig);
+    r.diff_normal = vec3_normalize(r.diff);
     return r;
 }
 
