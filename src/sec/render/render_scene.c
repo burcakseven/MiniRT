@@ -1,8 +1,6 @@
 #include "render.h"
 #include <scene/scene.h>
 #include <objects/objects.h>
-#define WIDTH 500
-#define HEIGHT 500
 #include <stdio.h>
 #include <utils/utils.h>
 
@@ -65,19 +63,19 @@ void render_scene(t_scene scene){
 
 	c = make_virtural_canvas(scene.camera);
 	y_index = 0;
-	while (y_index < HEIGHT){
+	while (y_index <= HEIGHT){
 		x_index = 0;
-		while (x_index < WIDTH){
+		while (x_index <= WIDTH){
 			ray = get_point_at(c,scene.camera,x_index,y_index);
-			printf("(%Lf,%Lf,%Lf)->(%Lf,%Lf,%Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
-			if(hit_sphere((t_point3){0,-10,0},0.1,ray).root_number >= 0)
+			//printf("(%Lf,%Lf,%Lf)->(%Lf,%Lf,%Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
+			if(intersec_sphere(ray, &intersect))
 			{
-				color = (t_color){1,1,0};
+				color = (t_color){1,0,0};
 				put_pixel_to_img(x_index, y_index, color);
 			}
 			else
 			{
-				color = (t_color){1,0,0};
+				color = (t_color){1,1,1};
 				put_pixel_to_img(x_index, y_index, color);
 			}
 			x_index++;

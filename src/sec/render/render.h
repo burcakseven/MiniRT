@@ -9,8 +9,8 @@
 # include <ray/ray.h>
 # include <stdlib.h>
 # include <mlx.h>
-# define WIDTH			500
-# define HEIGHT			500
+# define WIDTH			1024
+# define HEIGHT			720
 # define ASPECT_RATIO	(double) WIDTH / (double) HEIGHT
 # define WINDOW_TITLE	"miniRTE"
 

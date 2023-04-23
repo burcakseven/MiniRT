@@ -6,13 +6,13 @@
 t_camera create_camera(){
     t_camera camera;
 
-    camera.coordinate = (t_point3){3.0,2.0,1.0};
+    camera.coordinate = (t_point3){0,-20.0,0.0};
     camera.v_orientation = vec3_normalize((t_point3){0.0, 1.0, 0.0});
     camera.up = (t_point3){0.0,0.0,1.0};
     camera.lenght = 1.0;
     camera.HorzSize = 0.25;
     camera.apRatio = 16/9;
-    camera.fov = 90;
+    camera.fov = 60;
 	camera.look_at = vec3_add(camera.coordinate, camera.v_orientation);
     return camera;
 }
