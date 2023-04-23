@@ -18,6 +18,7 @@ typedef struct s_camera {
 	t_vec3		center;
 	t_vec3		u;//*
 	t_vec3		v;//*
+	t_vec3		look_at;
     double		lenght; //*
 	double		HorzSize; //*
 	double		apRatio; //*

@@ -3,7 +3,7 @@
 #include <stdio.h>
 t_bool int_test(double a, double b, double c, t_intersection *inter_data)
 {
-	double t1;
+  double t1;
 	double t2;
 	double discriminant;
 

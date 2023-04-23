@@ -67,8 +67,6 @@ t_vec3 vec3_normalize(t_vec3 v)
 #include <stdio.h>
 double vec3_dot(const t_vec3* a, const t_vec3* b)
 {
-	printf("vec_a: (%f,%f,%f)\n",a->x,a->y,a->z);
-	printf("vec_b: (%f,%f,%f)\n",b->x,b->y,b->z);
     return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 

@@ -30,16 +30,12 @@ typedef struct	s_mlx {
 
 typedef struct s_virtural_canvas
 {
-	t_point3	norm_k;
-	t_point3	norm_i;
-	t_point3	norm_j;
-	t_ray	canva_h;
-	t_ray	canva_v;
-	t_vec3	v_unit_v;
-	t_vec3	v_unit_h;
-	int		width;
-	int		height;
-	t_point3	v_camera;
+	t_point3	norm_k; // top of camera
+	t_point3	norm_i; // left of camera
+	t_point3	norm_j; // front of camera
+	t_point3	top_left; // top left point of canvas
+	t_point3	unit_v; // -i / WIDTH
+	t_point3	unit_h; // -k / HEIGHT
 } t_virtural_canvas;
 
 
@@ -48,6 +44,6 @@ int					put_pixel_to_img(int x, int y, t_color colour);
 void				print_img();
 t_mlx				get_mlx();
 t_virtural_canvas	make_virtural_canvas(t_camera camera);
-t_point3			get_point_at(t_virtural_canvas c, int x, int y);
+t_ray				get_point_at(t_virtural_canvas c, t_camera camera, int x, int y);
 void				render_scene(t_scene scene);
 #endif //MINIRT_RENDER_H
