@@ -15,21 +15,14 @@
 
 
 char	*remove_first_last_spaces(char	*str);
-void ft_error();
 void read_scene_data(t_scene *scene, int fd);
 
 t_scene create_scene(char *file);
-
-//utils
-int ft_compare(char *source1, char *source2);
-float ft_atof(char **str);
-int fill_rgb(char **data);
 
 //file_op
 int check_file(char *arg);
 
 //edit_line_utils.c
-int fill_rgb(char **data);
 void fill_coordinate(char **data, float xyz[][3], float min, float max);
 
 //data_placement
