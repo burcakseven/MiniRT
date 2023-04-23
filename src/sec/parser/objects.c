@@ -1,14 +1,11 @@
-#include "scene.h"
+#include "parser.h"
 
 void sphere_data(t_sphere **sphere, char *line)
 {
     static int sp = 0;
-    float coordinate[3];
-    float v_normal[3];
 
     t_sphere *temp_sp = sphere[sp];
-    fill_coordinate(&line ,&coordinate, MIN,MAX);
-    temp_sp->coordinate = convert_point3(coordinate);
+    fill_coordinate(&line ,&(temp_sp->coordinate), MIN,MAX);
     temp_sp->diameter = ft_atof(&line);
     line = remove_first_last_spaces(line);
     temp_sp->color = fill_rgb(&line);
@@ -24,9 +21,9 @@ void plane_data(t_plane **plane, char *line)
 
     t_plane *temp_pl = plane[pl];
     fill_coordinate(&line, &coordinate, MIN, MAX);
-    temp_pl->coordinate = convert_point3(coordinate);
+    //temp_pl->coordinate = convert_point3(coordinate);
     fill_coordinate(&line, &v_normal,-1,1);
-    temp_pl->v_normal = convert_point3(v_normal);
+    //temp_pl->v_normal = convert_point3(v_normal);
     temp_pl->color = fill_rgb(&line);
     pl++;
 }

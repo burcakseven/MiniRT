@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <parser/scene.h>
 #include <stdio.h>
+
 t_scene create_scene(char *file){
     int fd;
     t_scene scene;

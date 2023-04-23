@@ -10,7 +10,7 @@ static t_color convert_color(int clr) {
 	colour.z = (double)(clr & 0x0000FF ) / 255.999;
 }
 
-void ambient_data(t_ambient *ambient, char *line)
+void ambient_data(t_ambient_light *ambient, char *line)
 {
 	//if(ambient->color)
 	//	ft_error();
