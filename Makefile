@@ -42,7 +42,8 @@ APP_SRC		= main.c \
 					render/render_scene.c \
 				scene/scene.c \
 				utils/utils.c \
-				vec3/vec3.c
+				vec3/vec3.c \
+				light/light.c
 
 APP_OBJ		= $(APP_SRC:.c=.o)
 

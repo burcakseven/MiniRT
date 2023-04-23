@@ -1,5 +1,4 @@
 #include "matrix.h"
-#include <vec3/vec3.h>
 
 t_vec3 translation(t_point3 ray, t_point3 trans_data)
 {
@@ -34,7 +33,7 @@ float *matrix_inverse(float matrix[9])
                 matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) +
                 matrix[2] * (matrix[3] * matrix[7] - matrix[4] * matrix[6]);
     if (det == 0)
-        ft_error();
+        ft_error("matrix");
 
     float inv_det = 1.0 / det;
     inverse[0] = (matrix[4] * matrix[8] - matrix[5] * matrix[7]) * inv_det;
