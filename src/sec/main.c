@@ -50,7 +50,7 @@ int main(int ac, char **av){
 	t_scene scene;
     //parse
 	//scene = create_scene(av[1]);
-	printf("HELLO WORLD!!\n");
+	printf("HELLO WORLD!!!\n");
 	scene.camera = create_camera();
 	//scene.camera = update_camera(scene.camera);
 	render_scene(scene);
