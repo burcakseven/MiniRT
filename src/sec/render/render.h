@@ -11,7 +11,7 @@
 # include <mlx.h>
 # define WIDTH			1024
 # define HEIGHT			720
-# define ASPECT_RATIO	(double) WIDTH / (double) HEIGHT
+# define ASPECT_RATIO	((double) WIDTH / (double) HEIGHT)
 # define WINDOW_TITLE	"miniRTE"
 
 

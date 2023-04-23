@@ -12,7 +12,7 @@ t_camera create_camera(){
     camera.lenght = 1.0;
     camera.HorzSize = 0.25;
     camera.apRatio = 16/9;
-    camera.fov = 60;
+    camera.fov = 10;
 	camera.look_at = vec3_add(camera.coordinate, camera.v_orientation);
     return camera;
 }
