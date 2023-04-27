@@ -41,8 +41,24 @@ t_scene create_empty_scene(){
 int main(int ac, char **av){
 	t_scene scene;
     //parse
-	scene = create_empty_scene();
-	scene = create_scene(av[1]);
-	render_scene(scene);
-	print_img();
+	if (ac == 2)
+	{
+		scene = create_empty_scene();
+		printf("HELLO WORLD!\n");
+		scene = create_scene(av[1]);
+		printf(
+			"camera:\n"
+			"\tcoordinate: (%Lf,%Lf,%Lf)\n"
+			"\torientation: (%Lf,%Lf,%Lf)\n"
+			"\tfov: %d\n",
+			scene.camera.coordinate.x,scene.camera.coordinate.y,scene.camera.coordinate.z,
+			scene.camera.v_orientation.x,scene.camera.v_orientation.y,scene.camera.v_orientation.z,
+			scene.camera.fov
+		);
+		render_scene(scene);
+		print_img();
+		return (0);
+	}
+	printf("Invalid Arguments\n");
+	return (1);
 }

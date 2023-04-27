@@ -78,23 +78,26 @@ void render_scene(t_scene scene){
 			//printf("(%Lf,%Lf,%Lf)->(%Lf,%Lf,%Lf)\n",ray.orig.x,ray.orig.y,ray.orig.z,ray.dir.x,ray.dir.y,ray.dir.z);
 			if(intersec_sphere(ray, &intersect))
 			{
-				double dist = vec3_length(vec3_subtract(intersect.int_point, ray.orig));
-				if(dist > max)
-					max = dist;
-				if (dist < min)
-					min = dist;
-				intersect.local_normal = vec3_normalize(intersect.int_point);
-				if(computeIllumin(intersect, &light))
-				{
-					long double red = 255*light.brightness;
-					t_color color = (t_color){red,0,0};
+				t_color color = (t_color){255,0,0};
 					// exit(1);
-					put_pixel_to_img(x_index, y_index, color);
-				}
-				else{
-				t_color color = (t_color){0,0,0};
-					put_pixel_to_img(x_index, y_index, color);
-					}
+				put_pixel_to_img(x_index, y_index, color);
+				// double dist = vec3_length(vec3_subtract(intersect.int_point, ray.orig));
+				// if(dist > max)
+				// 	max = dist;
+				// if (dist < min)
+				// 	min = dist;
+				// intersect.local_normal = vec3_normalize(intersect.int_point);
+				// if(computeIllumin(intersect, &light))
+				// {
+				// 	long double red = 255*light.brightness;
+				// 	t_color color = (t_color){red,0,0};
+				// 	// exit(1);
+				// 	put_pixel_to_img(x_index, y_index, color);
+				// }
+				// else{
+				// t_color color = (t_color){0,0,0};
+				// 	put_pixel_to_img(x_index, y_index, color);
+				// 	}
 			}
 			else
 			{
