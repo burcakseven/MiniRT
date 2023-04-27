@@ -18,7 +18,7 @@ void sphere_data(t_container_sp **sphere, char *line)
 	next->content = temp_sp;
 	printf("segf below\n");
 	printf("[%p] -> [%p] = [%p]\n",*sphere,(*sphere)->next,next);
-	*sphere->next = next;
+	//*sphere->next = next;
 	printf("segf below\n");
 	next->prev = *sphere;
 	*sphere = next;
