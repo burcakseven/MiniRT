@@ -27,15 +27,10 @@ void camera_data(t_camera *camera, char *line)
 	float	coordinate[3];
 	float	v_orientation[3];
 
-	printf("Line: %s",line);
 	fill_coordinate(&line, &coordinate, MIN, MAX);
-
-	printf("Line: %s",line);
 	fill_coordinate(&line, &v_orientation, -1, 1);
 	camera->coordinate = convert_point3(coordinate);
-	printf("coordinate: (%Lf, %Lf, %Lf)\n",coordinate[0],coordinate[1],coordinate[2]);
 	camera->v_orientation = convert_point3(v_orientation);
-	printf("orientation: (%Lf, %Lf, %Lf)\n",v_orientation[0],v_orientation[1],v_orientation[2]);
 	camera->fov = (int)ft_atof(&line);
 	camera->up = (t_vec3) {0,0,1};
 	if(camera->fov < 0 || camera->fov > 180)

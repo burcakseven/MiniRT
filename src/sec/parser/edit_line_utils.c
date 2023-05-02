@@ -11,7 +11,6 @@ void fill_coordinate(char **data, float xyz[][3], float min, float max)
 		*data = remove_first_last_spaces(*data);
 		if((*data) == NULL)
 			ft_error("Invalid input for coordinate");
-		
 		(*xyz)[i] = ft_atof(data);
 		if((*xyz)[i] < min || (*xyz)[i] > max)
 			ft_error("Invalid input for coordinate");
