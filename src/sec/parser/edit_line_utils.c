@@ -11,6 +11,7 @@ void fill_coordinate(char **data, float xyz[][3], float min, float max)
 		*data = remove_first_last_spaces(*data);
 		if((*data) == NULL)
 			ft_error("Invalid input for coordinate");
+		
 		(*xyz)[i] = ft_atof(data);
 		if((*xyz)[i] < min || (*xyz)[i] > max)
 			ft_error("Invalid input for coordinate");
@@ -28,8 +29,8 @@ float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.2
     result = 0.0;
     sign = 1.0;
     i = 0;
-    if (*((*str)++) == '-')
-        sign = -1.0;
+    if (**str ==  '-')
+        ((*str)++,sign = -1.0);
     else if (**str == '+')
         (*str)++;
     while (**str != '\0'&&(ft_isdigit(**str) || **str == '.'))
