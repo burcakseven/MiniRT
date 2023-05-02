@@ -51,7 +51,7 @@ void	validate_line_data(char *line)
 void process_line(t_scene *scene, char *data)
 {
 	char	*id;
-	(void) scene;
+
 	data = remove_first_last_spaces(data);
 	if(!data)
 		ft_error("invalid input");

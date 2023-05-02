@@ -32,6 +32,7 @@ void camera_data(t_camera *camera, char *line)
 	camera->coordinate = convert_point3(coordinate);
 	camera->v_orientation = convert_point3(v_orientation);
 	camera->fov = (int)ft_atof(&line);
+	printf("camera fov: %d\n", camera->fov);
 	camera->up = (t_vec3) {0,0,1};
 	if(camera->fov < 0 || camera->fov > 180)
 		ft_error("Invalid fov value for camera");

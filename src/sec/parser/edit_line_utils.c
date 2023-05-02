@@ -21,18 +21,15 @@ void fill_coordinate(char **data, float xyz[][3], float min, float max)
 
 float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.22.4 gibi bir sayı olursa?
 {
-    float result;
-    float sign;
-    int i;
+    float	result;
+    float	sign;
+    int		i;
 
     result = 0.0;
     sign = 1.0;
     i = 0;
-    if (**str == '-')
-	{
+    if (*((*str)++) == '-')
         sign = -1.0;
-		(*str)++;
-	}
     else if (**str == '+')
         (*str)++;
     while (**str != '\0'&&(ft_isdigit(**str) || **str == '.'))
@@ -40,7 +37,8 @@ float ft_atof(char **str) //kontrol lazım .234 gibi bir sayı olursa? ya da 1.2
 		if(**str != '\0' && (**str == '.' || i != 0))
 		{
 			i++;
-			(*str)++;
+			if (**str == '.')
+				(*str)++;
 		}
         result = result * 10.0 + (float)(**str - '0');
         (*str)++;
@@ -70,7 +68,7 @@ int fill_rgb(char **data)
 		color_string[j] = '\0';
         temp_color = ft_atoi(color_string);
         if(color_string[0] == '\0' || temp_color > 255 || temp_color < 0)
-            ft_error("Invalın input on color");
+            ft_error("Invalid input near\n");
 		color += temp_color << (8*i);
 	}
 	del(color_string);

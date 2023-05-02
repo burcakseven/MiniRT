@@ -16,11 +16,8 @@ void sphere_data(t_container_sp **sphere, char *line)
     line = remove_first_last_spaces(line);
     temp_sp->color = fill_rgb(&line);
 	next->content = temp_sp;
-	printf("segf below\n");
-	printf("[%p] -> [%p] = [%p]\n",*sphere,(*sphere)->next,next);
-	//*sphere->next = next;
-	printf("segf below\n");
-	next->prev = *sphere;
+    next->next = *sphere;
+    (*sphere)->prev = next;
 	*sphere = next;
 }
 
@@ -40,8 +37,8 @@ void plane_data(t_container_pl **plane, char *line)
     temp_pl->v_normal = convert_point3(v_normal);
     temp_pl->color = fill_rgb(&line);
     next->content = temp_pl;
-	(*plane)->next = next;
-	next->prev = *plane;
+	next->next = *plane;
+	(*plane)->prev = *plane;
 	*plane = next;
 }
 
@@ -64,7 +61,7 @@ void cylinder_data(t_container_cy **cylinder, char *line)
     temp_cy->height = ft_atof(&line);
     temp_cy->color = fill_rgb(&line);
     next->content = temp_cy;
-	(*cylinder)->next = next;
-	next->prev = *cylinder;
+	next->next = *cylinder;
+	(*cylinder)->prev = next;
 	*cylinder = next;
 }
