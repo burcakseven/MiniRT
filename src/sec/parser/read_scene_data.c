@@ -7,7 +7,6 @@ void choose_element(char *element, t_scene *scene, char *data)
 	static int cy = 0;
 
 	(void) sl, (void) cy;
-	printf("id: %s\n",element);
 	if(ft_compare("A",element))
 		ambient_data(&(scene->ambient), data);
 	else if (ft_compare("C",element))
@@ -21,7 +20,7 @@ void choose_element(char *element, t_scene *scene, char *data)
 	else if(ft_compare("cy",element))
 		cylinder_data(&(scene->cylinder), data);
 	else
-		ft_error("id not found");
+		ft_error("Unidentified object.");
 }
 
 char *pass_id(char *data)
@@ -51,7 +50,7 @@ void	validate_line_data(char *line)
 void process_line(t_scene *scene, char *data)
 {
 	char	*id;
-	(void) scene;
+
 	data = remove_first_last_spaces(data);
 	if(!data)
 		ft_error("invalid input");
