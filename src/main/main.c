@@ -1,3 +1,4 @@
+#include "vec3/r_vec3.h"
 #include <unistd.h>
 #include <frame/frame.h>
 #include <stdio.h>
@@ -177,9 +178,9 @@ void show_img(){
 int	main(int ac, char **av)
 {
     t_scene scene;
-    t_cylinder cylinder = create_cylinder();
+    // t_cylinder cylinder = create_cylinder();
     scene.camera = create_camera();
-    scene.cylinder = &cylinder;
+    // scene.cylinder = &cylinder;
 	//scene = create_scene(av[1]);
     render_scene(scene);
     show_img();

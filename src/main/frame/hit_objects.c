@@ -69,7 +69,7 @@ t_root hit_cylinder(point3 center, const point3 normal_vec,\
 
 t_root root_control(t_root root) // ne döndürsem?
 {
-	t_root root;
+	// t_root root;
 
 	// root = hit_sphere(shpere.coordinate, shpere.diameter, r);//şu an işe yaramıyor parser değişinde yarar
 	if(root.root_number == 0)
