@@ -26,7 +26,7 @@ t_camera create_camera(){
 
     camera.coordinate[0] = 0.0f;
     camera.coordinate[1] = 0.0f;
-    camera.coordinate[2] = 5.0f;
+    camera.coordinate[2] = -5.0f;
     camera.v_orientation[0] = 0.0f;
     camera.v_orientation[1] = 0.0f;
     camera.v_orientation[2] = 1.0f;
