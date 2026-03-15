@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [-Isrc/main, -Ilibs/libft, -Ilibs/libft/src, -Ilibs/minilibx_opengl, -Ilibs/minilibx_opengl/src]
