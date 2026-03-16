@@ -181,7 +181,7 @@ int	main(int ac, char **av)
     // t_cylinder cylinder = create_cylinder();
     scene.camera = create_camera();
     // scene.cylinder = &cylinder;
-	//scene = create_scene(av[1]);
+	// scene = create_scene(av[1]);
     render_scene(scene);
     show_img();
 

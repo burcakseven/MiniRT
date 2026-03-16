@@ -8,6 +8,8 @@ double discriminant(double a,double b, double c)
 t_root roots(double a,double b, double discriminant)
 {
 	t_root root;
+	double temp;
+
 	if(discriminant < 0)
 		root.root_number = 0;
 	else if (discriminant == 0 )
@@ -20,8 +22,13 @@ t_root roots(double a,double b, double discriminant)
 		root.root_number = 2;
 		root.root1 = (-b + sqrt(discriminant)) / (-2 * a);
 		root.root2 = (-b - sqrt(discriminant)) / (-2 * a);
+		if(root.root1 > root.root2)
+		{
+			temp = root.root1;
+			root.root1 = root.root2;
+			root.root2 = temp;
+		}
 	}
-	// root.discriminant;
 	return root;
 }
 
@@ -67,9 +74,8 @@ t_root hit_cylinder(point3 center, const point3 normal_vec,\
 	return(roots(a,b,discriminant(a,b,c)));
 }
 
-t_root root_control(t_root root) // ne döndürsem?
+t_root root_control(t_root root) // revize lazım, epsilon ve kameranın obje içinde olması durumuna uymalı
 {
-	// t_root root;
 
 	// root = hit_sphere(shpere.coordinate, shpere.diameter, r);//şu an işe yaramıyor parser değişinde yarar
 	if(root.root_number == 0)

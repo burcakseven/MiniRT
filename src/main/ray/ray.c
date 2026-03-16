@@ -36,12 +36,14 @@ t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag)
 color ray_color (const t_ray *r)
 {
     double t;
+    
     color added;
     point3 sp = {0,0,1};
+
     if(hit_sphere(sp,0.5,*r).root_number)
     {
         color cl = {1, 0, 0};
-        //printf("MERH\nA");
+        // printf("MERH\nA");
         return cl;
     }
     // if(hit_plane(sp,(point3){0,1,0},*r))
