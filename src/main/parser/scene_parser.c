@@ -41,7 +41,8 @@ void	validate_line_data(char *line)
 	while (*line != '\0')
 	{
 		if((*line > '9' || *line < '0') && !(*line == '+' \
-		|| *line == '-' || *line == '.' || *line == ' ' || *line == ','))
+		|| *line == '-' || *line == '.' || *line == ' ' \
+		|| *line == ',' || *line == '\n'))
 			ft_error();
 		line++;
 	}

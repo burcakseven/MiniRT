@@ -1,4 +1,5 @@
 #include "scene.h"
+#include <stdio.h>
 
 void	check_name(char *file_name)
 {
