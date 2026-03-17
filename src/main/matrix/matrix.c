@@ -33,7 +33,7 @@ float *matrix_inverse(float matrix[9])
                 matrix[1] * (matrix[3] * matrix[8] - matrix[5] * matrix[6]) +
                 matrix[2] * (matrix[3] * matrix[7] - matrix[4] * matrix[6]);
     if (det == 0)
-        ft_error();
+        ft_error("Matrix is singular");
 
     float inv_det = 1.0 / det;
     inverse[0] = (matrix[4] * matrix[8] - matrix[5] * matrix[7]) * inv_det;

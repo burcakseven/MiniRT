@@ -41,7 +41,7 @@ typedef struct s_virtural_canvas {
 } t_virtural_canvas;
 
 t_canvas get_canvas();
-int put_pixel_to_img(int x, int y, color colour);
+int put_pixel_to_img(int x, int y, int colour);
 void print_img();
 t_mlx get_mlx();
 t_virtural_canvas make_virtural_canvas(t_camera camera);

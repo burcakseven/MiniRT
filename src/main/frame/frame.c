@@ -8,17 +8,17 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-unsigned int rgb_color(color colour)
-{
-    int ir;
-	int ig;
-	int ib;
+// unsigned int rgb_color(color colour)
+// {
+//     int ir;
+// 	int ig;
+// 	int ib;
 
-	ir = (int)(255.999 * colour.x);
-    ig = (int)(255.999 * colour.y);
-    ib = (int)(255.999 * colour.z);
-	return(ir<< 16 | ig << 8 | ib);
-}
+// 	ir = (int)(255.999 * colour.x);
+//     ig = (int)(255.999 * colour.y);
+//     ib = (int)(255.999 * colour.z);
+// 	return(ir<< 16 | ig << 8 | ib);
+// }
 
 double deg2rad(double degrees)
 {
@@ -57,9 +57,8 @@ void print_color(t_data *img)
             t_ray r = make_ray(origin, vec3_add(lower_left_corner, vec3_add(vec3_scale(horizontal, u),
                                             vec3_scale(vertical, v))));
 
-            color pixel_color = ray_color(&r);
-            int rgb = rgb_color(pixel_color);
-			my_mlx_pixel_put(img, i, j, rgb);
+            unsigned int pixel_color = ray_color(&r, NULL);
+			my_mlx_pixel_put(img, i, j, pixel_color);
         }
     }
 }

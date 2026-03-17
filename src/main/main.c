@@ -108,7 +108,7 @@ void reduce_color(t_light light, point3 intercept, color *colour) {
 //}
 
 void render_scene(t_scene scene) {
-  color colour;
+  unsigned int colour;
   // point3 intersection;
   t_ray ray;
   t_virtural_canvas canvas;
@@ -122,6 +122,7 @@ void render_scene(t_scene scene) {
       /* BUNU */
       ray.dir = get_point_at(canvas, w, h);
       colour = ray_color(&ray, &scene);
+
       put_pixel_to_img(w, h, colour);
       w++;
     }
