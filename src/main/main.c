@@ -190,7 +190,7 @@ int main(int ac, char **av) {
   ft_bzero(&scene, sizeof(t_scene));
   fd = check_file(av[1]);
   read_scene_data(&scene, fd);
-  // scene.camera = create_camera();
+  scene.camera = create_camera();
   render_scene(scene);
   show_img();
 
