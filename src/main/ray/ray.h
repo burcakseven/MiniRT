@@ -2,17 +2,16 @@
 #define RAY_H
 
 #include <vec3/r_vec3.h>
+struct s_scene;
 
 typedef struct s_ray {
   t_vec3 orig;
   t_vec3 dir;
 } t_ray;
 
-#include <parser/scene.h>
-
 t_ray make_ray(point3 origin, t_vec3 direction);
 t_vec3 ray_at(t_ray r, double t);
-color ray_color(const t_ray *r, const t_scene *scene);
+color ray_color(const t_ray *r, const struct s_scene *scene);
 t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag);
 
 // point3  fint_intersect(t_ray ray, t_scene scene, color *colour);

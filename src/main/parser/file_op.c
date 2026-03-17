@@ -11,7 +11,7 @@ void	check_name(char *file_name)
 		if (*(cmp_addres + 3) == '\0')
 			return ;
 	}
-	ft_error();
+	ft_error("Invalid file extension. Expected '.rt'");
 }
 
 int check_file(char *arg)
@@ -21,10 +21,10 @@ int check_file(char *arg)
 
 	file_name = remove_first_last_spaces(arg);
 	if(!file_name)
-		ft_error();
+		ft_error("Filename is empty after removing spaces");
 	check_name(file_name);
 	fd = open(file_name, O_RDONLY);
 	if(fd < 0)
-		ft_error();
+		ft_error("Could not open file. Check if it exists");
     return fd;
 }

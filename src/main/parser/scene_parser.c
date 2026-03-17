@@ -20,7 +20,7 @@ void choose_element(char *element, t_scene *scene, char *data)
 	else if(ft_compare("cy",element))
 		cylinder_data(&(scene->cylinder), data);
 	else
-		ft_error();
+		ft_error("Unknown object ID. Expected 'A', 'C', 'L', 'sp', 'pl', or 'cy'");
 }
 
 char *pass_id(char *data)
@@ -43,7 +43,7 @@ void	validate_line_data(char *line)
 		if((*line > '9' || *line < '0') && !(*line == '+' \
 		|| *line == '-' || *line == '.' || *line == ' ' \
 		|| *line == ',' || *line == '\n'))
-			ft_error();
+			ft_error("Invalid character in line data. Only numbers, spaces, dots, commas, and +- allowed");
 		line++;
 	}
 }
@@ -54,7 +54,7 @@ void process_line(t_scene *scene, char *data)
 	(void) scene;
 	data = remove_first_last_spaces(data);
 	if(!data)
-		ft_error();
+		ft_error("Empty line or invalid data structure");
 	id = pass_id(data);
 	data += ft_strlen(id);
     validate_line_data(data);
@@ -72,7 +72,9 @@ void read_scene_data(t_scene *scene, int fd)
         line = get_next_line(fd);
         if (line == NULL)
             break;
+        set_error_line(line);
         process_line(scene, line);
         del(line);
     }
+    set_error_line(NULL);
 }

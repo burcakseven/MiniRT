@@ -1,8 +1,16 @@
 #include "scene.h"
 
-void ft_error()
+static char *current_line = NULL;
+
+void set_error_line(char *line) {
+    current_line = line;
+}
+
+void ft_error(char *msg)
 {
-	printf("Error\n");
+    if (current_line)
+        printf("Error in line: %s", current_line);
+	printf("Error: %s\n", msg);
     garbage_collect();
 	exit(1);
 }

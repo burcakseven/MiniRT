@@ -44,7 +44,7 @@ static void append(void *data) {
     t_allocated *datas = get_allocated_datas();
     t_allocated *new = create_new_node(data);
     if (new == NULL)
-        ft_error();
+        ft_error("Memory allocation failed in GC node creation");
     if (datas->next == NULL) {
         datas->next = new;
     } else {
@@ -57,7 +57,7 @@ static void append(void *data) {
 void *new(size_t size) {
 	void *data = malloc(size);
 	if (data == NULL)
-		ft_error();
+		ft_error("Memory allocation failed (malloc returned NULL)");
 	append(data);
 	return data;
 }

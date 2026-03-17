@@ -76,7 +76,8 @@ typedef struct s_scene {
 }	t_scene;
 
 char	*remove_first_last_spaces(char	*str);
-void ft_error();
+void ft_error(char *msg);
+void set_error_line(char *line);
 void read_scene_data(t_scene *scene, int fd);
 
 //utils
