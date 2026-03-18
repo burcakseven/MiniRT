@@ -42,7 +42,7 @@ t_vec3 array_to_vec3(const float coord[3]) {
 }
 
 static unsigned int apply_lighting(const t_hit_record *rec,
-                                    const t_scene *scene) {
+                                   const t_scene *scene) {
   t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
   t_vec3 light_dir = vec3_normalize(vec3_subtract(light_pos, rec->p));
 
@@ -72,7 +72,8 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
     sp_center = array_to_vec3(scene->sphere->coordinate);
     sp_radius = scene->sphere->diameter / 2.0;
     root = hit_sphere(sp_center, sp_radius, *r);
-    if (root.root_number > 0 && root.root1 > 0.001 && root.root1 < closest_so_far) {
+    if (root.root_number > 0 && root.root1 > 0.001 &&
+        root.root1 < closest_so_far) {
       closest_so_far = root.root1;
       rec->t = root.root1;
       rec->p = ray_at(*r, rec->t);
@@ -84,7 +85,8 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
   if (scene->plane) {
     pl_point = array_to_vec3(scene->plane->coordinate);
     root = hit_plane(pl_point, array_to_vec3(scene->plane->v_normal), *r);
-    if (root.root_number > 0 && root.root1 > 0.001 && root.root1 < closest_so_far) {
+    if (root.root_number > 0 && root.root1 > 0.001 &&
+        root.root1 < closest_so_far) {
       closest_so_far = root.root1;
       rec->t = root.root1;
       rec->p = ray_at(*r, rec->t);

@@ -38,13 +38,19 @@ t_root hit_sphere(const point3 center, double rad, const t_ray r) {
 
 t_root hit_plane(const point3 center, const point3 normal_vec,
                  const t_ray ray) {
-  t_root root;
-  t_ray new_ray;
-  new_ray = transformed_ray(normal_vec, ray, 1);
+	t_root root;
+	double denom = vec3_dot(&ray.dir, &normal_vec);
 
-  root.root_number = 1;
-  root.root1 = new_ray.orig.z / vec3_scale(new_ray.dir, -1).z;
-
+	if (fabs(denom) < 1e-6)
+		root.root_number = 0;
+	else
+	{	
+		t_vec3 oc = vec3_subtract(center, ray.orig);
+		root.root1 = vec3_dot(&oc, &normal_vec) / denom;
+		if(root.root1 > 0)
+			root.root_number = 1;
+		else
+			root.root_number = 0;}
   return root;
 }
 
