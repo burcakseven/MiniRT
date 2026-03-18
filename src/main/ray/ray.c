@@ -41,23 +41,57 @@ t_vec3 array_to_vec3(const float coord[3]) {
   return (t_vec3){coord[0], coord[1], coord[2]};
 }
 
-static unsigned int apply_lighting(const t_hit_record *rec,
-                                   const t_scene *scene) {
-  t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
-  t_vec3 light_dir = vec3_normalize(vec3_subtract(light_pos, rec->p));
+static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene) {
+    t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
+    t_vec3 light_dir = vec3_normalize(vec3_subtract(light_pos, rec->p));
 
-  double dot = vec3_dot(&rec->normal, &light_dir);
-  if (dot < 0)
-    dot = 0;
+    double obj_r = ((rec->color >> 16) & 0xFF) / 255.0;
+    double obj_g = ((rec->color >> 8) & 0xFF) / 255.0;
+    double obj_b = (rec->color & 0xFF) / 255.0;
 
-  double intensity = dot * scene->light.brightness;
+    double amb_r_light = ((scene->ambient.color >> 16) & 0xFF) / 255.0;
+    double amb_g_light = ((scene->ambient.color >> 8) & 0xFF) / 255.0;
+    double amb_b_light = (scene->ambient.color & 0xFF) / 255.0;
 
-  int r = ((rec->color >> 16) & 0xFF) * intensity;
-  int g = ((rec->color >> 8) & 0xFF) * intensity;
-  int b = (rec->color & 0xFF) * intensity;
+    double final_r = obj_r * scene->ambient.range * amb_r_light;
+    double final_g = obj_g * scene->ambient.range * amb_g_light;
+    double final_b = obj_b * scene->ambient.range * amb_b_light;
 
-  return (r << 16 | g << 8 | b);
+    double dot = vec3_dot(&rec->normal, &light_dir);
+    if (dot > 0) {
+        double diffuse_intensity = dot * scene->light.brightness;
+        
+        double l_r = ((scene->light.color >> 16) & 0xFF) / 255.0;
+        double l_g = ((scene->light.color >> 8) & 0xFF) / 255.0;
+        double l_b = (scene->light.color & 0xFF) / 255.0;
+
+        final_r += obj_r * diffuse_intensity * l_r;
+        final_g += obj_g * diffuse_intensity * l_g;
+        final_b += obj_b * diffuse_intensity * l_b;
+    }
+
+    int r = (int)(final_r * 255);
+    int g = (int)(final_g * 255);
+    int b = (int)(final_b * 255);
+
+    if (r > 255) r = 255;
+    if (g > 255) g = 255;
+    if (b > 255) b = 255;
+
+    return (r << 16 | g << 8 | b);
 }
+
+// static unsigned int apply_ambient(unsigned int obj_color, const t_scene
+// *scene) {
+//     double ratio = scene->ambient.range;
+
+//     int r = ((obj_color >> 16) & 0xFF) * ratio * (((scene->ambient.color >>
+//     16) & 0xFF) / 255.0); int g = ((obj_color >> 8) & 0xFF) * ratio *
+//     (((scene->ambient.color >> 8) & 0xFF) / 255.0); int b = (obj_color &
+//     0xFF) * ratio * (((scene->ambient.color & 0xFF) / 255.0));
+
+//     return (r << 16 | g << 8 | b);
+// }
 
 static int hit_anything(const t_ray *r, const t_scene *scene,
                         t_hit_record *rec) {
@@ -95,6 +129,8 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
       hit = 1;
     }
   }
+
+  // apply_ambient(rec->color, scene);
   return hit;
 }
 

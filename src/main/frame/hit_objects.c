@@ -12,7 +12,7 @@ t_root roots(double a, double b, double discriminant) {
     root.root_number = 0;
   else if (discriminant == 0) {
     root.root_number = 1;
-    root.root1 = -b / (-2 * a);
+    root.root1 = -b / (2 * a);
   } else {
     root.root_number = 2;
     root.root1 = (-b + sqrt(discriminant)) / (2 * a);
