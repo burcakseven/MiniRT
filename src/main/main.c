@@ -118,6 +118,9 @@ void render_scene(t_scene scene) {
   ray.orig = convert_point3(scene.camera.coordinate);
   while (h < HEIGHT) {
     int w = 0;
+    if (h % 20 == 0)
+        printf("Render progress: %d%%\r", (h * 100) / HEIGHT);
+    fflush(stdout);
     while (w < WIDTH) {
       /* BUNU */
       ray.dir = get_point_at(canvas, w, h);
@@ -128,6 +131,7 @@ void render_scene(t_scene scene) {
     }
     h++;
   }
+  printf("Render complete! 100%%\n");
 }
 
 // void render_scene(t_scene scene){
