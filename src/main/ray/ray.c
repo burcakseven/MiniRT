@@ -41,9 +41,65 @@ t_vec3 array_to_vec3(const float coord[3]) {
   return (t_vec3){coord[0], coord[1], coord[2]};
 }
 
+static int hit_anything(const t_ray *r, const t_scene *scene,
+                        t_hit_record *rec) {
+  t_vec3 sp_center;
+  double sp_radius;
+  t_vec3 pl_point;
+  t_root root;
+  int hit = 0;
+  double closest_so_far = 1e30;
+
+  if (scene->sphere) {
+    sp_center = array_to_vec3(scene->sphere->coordinate);
+    sp_radius = scene->sphere->diameter / 2.0;
+    root = hit_sphere(sp_center, sp_radius, *r);
+    if (root.root_number > 0 && root.root1 > 0.001 &&
+        root.root1 < closest_so_far) {
+      closest_so_far = root.root1;
+      rec->t = root.root1;
+      rec->p = ray_at(*r, rec->t);
+      rec->normal = normal_at_sphere(sp_center, rec->p);
+      rec->color = scene->sphere->color;
+      hit = 1;
+    }
+  }
+  if (scene->plane) {
+    pl_point = array_to_vec3(scene->plane->coordinate);
+    root = hit_plane(pl_point, array_to_vec3(scene->plane->v_normal), *r);
+    if (root.root_number > 0 && root.root1 > 0.001 &&
+        root.root1 < closest_so_far) {
+      closest_so_far = root.root1;
+      rec->t = root.root1;
+      rec->p = ray_at(*r, rec->t);
+      rec->normal = vec3_normalize(array_to_vec3(scene->plane->v_normal));
+      rec->color = scene->plane->color;
+      hit = 1;
+    }
+  }
+  return hit;
+}
+
+int is_in_shadow(t_vec3 light_vec, const t_scene *scene, const t_hit_record *rec) {
+    t_ray shadow_ray;
+    t_hit_record shadow_rec;
+    double light_dist = vec3_length(light_vec);
+    t_vec3 light_dir = vec3_normalize(light_vec);
+
+    shadow_ray.orig = vec3_add(rec->p, vec3_scale(rec->normal, 0.001));
+    shadow_ray.dir = light_dir;
+
+    if (hit_anything(&shadow_ray, scene, &shadow_rec)) {
+        if (shadow_rec.t < light_dist)
+            return 1;
+    }
+    return 0;
+}
+
 static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene) {
     t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
-    t_vec3 light_dir = vec3_normalize(vec3_subtract(light_pos, rec->p));
+    t_vec3 light_vec = vec3_subtract(light_pos, rec->p);
+    t_vec3 light_dir = vec3_normalize(light_vec);
 
     double obj_r = ((rec->color >> 16) & 0xFF) / 255.0;
     double obj_g = ((rec->color >> 8) & 0xFF) / 255.0;
@@ -57,17 +113,20 @@ static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene
     double final_g = obj_g * scene->ambient.range * amb_g_light;
     double final_b = obj_b * scene->ambient.range * amb_b_light;
 
-    double dot = vec3_dot(&rec->normal, &light_dir);
-    if (dot > 0) {
-        double diffuse_intensity = dot * scene->light.brightness;
-        
-        double l_r = ((scene->light.color >> 16) & 0xFF) / 255.0;
-        double l_g = ((scene->light.color >> 8) & 0xFF) / 255.0;
-        double l_b = (scene->light.color & 0xFF) / 255.0;
+    // Gölge kontrolü! Eğer gölge değilse ışığı ekle
+    if (!is_in_shadow(light_vec, scene, rec)) {
+        double dot = vec3_dot(&rec->normal, &light_dir);
+        if (dot > 0) {
+            double diffuse_intensity = dot * scene->light.brightness;
+            
+            double l_r = ((scene->light.color >> 16) & 0xFF) / 255.0;
+            double l_g = ((scene->light.color >> 8) & 0xFF) / 255.0;
+            double l_b = (scene->light.color & 0xFF) / 255.0;
 
-        final_r += obj_r * diffuse_intensity * l_r;
-        final_g += obj_g * diffuse_intensity * l_g;
-        final_b += obj_b * diffuse_intensity * l_b;
+            final_r += obj_r * diffuse_intensity * l_r;
+            final_g += obj_g * diffuse_intensity * l_g;
+            final_b += obj_b * diffuse_intensity * l_b;
+        }
     }
 
     int r = (int)(final_r * 255);
@@ -93,46 +152,6 @@ static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene
 //     return (r << 16 | g << 8 | b);
 // }
 
-static int hit_anything(const t_ray *r, const t_scene *scene,
-                        t_hit_record *rec) {
-  t_vec3 sp_center;
-  double sp_radius;
-  t_vec3 pl_point;
-  t_root root;
-  int hit = 0;
-  double closest_so_far = INFINITY;
-
-  if (scene->sphere) {
-    sp_center = array_to_vec3(scene->sphere->coordinate);
-    sp_radius = scene->sphere->diameter / 2.0;
-    root = hit_sphere(sp_center, sp_radius, *r);
-    if (root.root_number > 0 && root.root1 > 0.001 &&
-        root.root1 < closest_so_far) {
-      closest_so_far = root.root1;
-      rec->t = root.root1;
-      rec->p = ray_at(*r, rec->t);
-      rec->normal = normal_at_sphere(sp_center, rec->p);
-      rec->color = scene->sphere->color;
-      hit = 1;
-    }
-  }
-  if (scene->plane) {
-    pl_point = array_to_vec3(scene->plane->coordinate);
-    root = hit_plane(pl_point, array_to_vec3(scene->plane->v_normal), *r);
-    if (root.root_number > 0 && root.root1 > 0.001 &&
-        root.root1 < closest_so_far) {
-      closest_so_far = root.root1;
-      rec->t = root.root1;
-      rec->p = ray_at(*r, rec->t);
-      rec->normal = array_to_vec3(scene->plane->v_normal);
-      rec->color = scene->plane->color;
-      hit = 1;
-    }
-  }
-
-  // apply_ambient(rec->color, scene);
-  return hit;
-}
 
 unsigned int ray_color(const t_ray *r, const t_scene *scene) {
   t_hit_record rec;
