@@ -73,16 +73,12 @@ t_root hit_cylinder(point3 center, const point3 normal_vec, const t_ray ray,
   return (roots(a, b, discriminant(a, b, c)));
 }
 
-t_root root_control(t_root root) // revize lazım, epsilon ve kameranın obje
-                                 // içinde olması durumuna uymalı
-{
-
-  // root = hit_sphere(shpere.coordinate, shpere.diameter, r);//şu an işe
-  // yaramıyor parser değişinde yarar
-  if (root.root_number == 0)
-    return root;
-  else if (root.root1 < 0 || root.root2 < 0) {
-    root.root_number = 0;
-  }
-  return root;
+// En yakın pozitif kökü döndürür; geçerli kök yoksa -1 döner
+double closest_positive_root(t_root root) {
+    double t = -1.0;
+    if (root.root_number > 0 && root.root1 > 0.001)
+        t = root.root1;
+    if (root.root_number > 1 && root.root2 > 0.001 && (t < 0 || root.root2 < t))
+        t = root.root2;
+    return t;
 }

@@ -51,14 +51,15 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
   double closest_so_far = 1e30;
 
   if (scene->sphere) {
+    double t;
     sp_center = array_to_vec3(scene->sphere->coordinate);
     sp_radius = scene->sphere->diameter / 2.0;
     root = hit_sphere(sp_center, sp_radius, *r);
-    if (root.root_number > 0 && root.root1 > 0.001 &&
-        root.root1 < closest_so_far) {
-      closest_so_far = root.root1;
-      rec->t = root.root1;
-      rec->p = ray_at(*r, rec->t);
+    t = closest_positive_root(root);
+    if (t > 0 && t < closest_so_far) {
+      closest_so_far = t;
+      rec->t = t;
+      rec->p = ray_at(*r, t);
       rec->normal = normal_at_sphere(sp_center, rec->p);
       rec->color = scene->sphere->color;
       hit = 1;
@@ -105,15 +106,14 @@ static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene
     double obj_g = ((rec->color >> 8) & 0xFF) / 255.0;
     double obj_b = (rec->color & 0xFF) / 255.0;
 
-    double amb_r_light = ((scene->ambient.color >> 16) & 0xFF) / 255.0;
-    double amb_g_light = ((scene->ambient.color >> 8) & 0xFF) / 255.0;
-    double amb_b_light = (scene->ambient.color & 0xFF) / 255.0;
+    double amb_r_light = ((scene->ambient.color >> 16)) / 255.0;
+    double amb_g_light = ((scene->ambient.color >> 8)) / 255.0;
+    double amb_b_light = (scene->ambient.color) / 255.0;
 
     double final_r = obj_r * scene->ambient.range * amb_r_light;
     double final_g = obj_g * scene->ambient.range * amb_g_light;
     double final_b = obj_b * scene->ambient.range * amb_b_light;
 
-    // Gölge kontrolü! Eğer gölge değilse ışığı ekle
     if (!is_in_shadow(light_vec, scene, rec)) {
         double dot = vec3_dot(&rec->normal, &light_dir);
         if (dot > 0) {

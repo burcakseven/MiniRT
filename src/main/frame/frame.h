@@ -29,5 +29,6 @@ t_root hit_sphere(const point3 center, double rad, const t_ray r);
 t_root hit_plane(const point3 center, const point3 normal_vec, const t_ray r);
 t_root hit_cylinder(point3 center, const point3 normal_vec,\
  const t_ray r, const double radius, const double height);
+double closest_positive_root(t_root root);
 
 #endif
