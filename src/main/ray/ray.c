@@ -19,13 +19,14 @@ point3 ray_at(t_ray r, double t) {
   return result;
 }
 
-t_ray transformed_ray(point3 normal_vec, t_vec3 center, t_ray r, int inverse_flag) {
+t_ray transformed_ray(point3 normal_vec, t_vec3 center, t_ray r,
+                      int inverse_flag) {
   float *matrix;
   t_ray new_r;
 
   new_r.orig = vec3_subtract(r.orig, center);
   new_r.dir = r.dir;
-  
+
   matrix = init_matrix(normal_vec, inverse_flag);
   new_r.dir = matrix_vector_multiply(matrix, new_r.dir);
   new_r.orig = matrix_vector_multiply(matrix, new_r.orig);
@@ -40,19 +41,18 @@ t_vec3 normal_at_sphere(point3 center, point3 hit_point) {
   return vec3_normalize(normal);
 }
 
-t_vec3 normal_at_cylinder(t_vec3 cy_center, t_vec3 cy_axis, t_vec3 p)
-{
-    t_vec3 v;
-    double m;
-    t_vec3 projection_p;
-    t_vec3 normal;
-  
-    v = vec3_subtract(p, cy_center);
-    m = vec3_dot(&v, &cy_axis);
-    projection_p = vec3_add(cy_center, vec3_scale(cy_axis, m));
-    normal = vec3_subtract(p, projection_p);
+t_vec3 normal_at_cylinder(t_vec3 cy_center, t_vec3 cy_axis, t_vec3 p) {
+  t_vec3 v;
+  double m;
+  t_vec3 projection_p;
+  t_vec3 normal;
 
-    return (vec3_normalize(normal));
+  v = vec3_subtract(p, cy_center);
+  m = vec3_dot(&v, &cy_axis);
+  projection_p = vec3_add(cy_center, vec3_scale(cy_axis, m));
+  normal = vec3_subtract(p, projection_p);
+
+  return (vec3_normalize(normal));
 }
 
 t_vec3 array_to_vec3(const float coord[3]) {
@@ -99,7 +99,7 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
   if (scene->cylinder) {
     double t;
     t_vec3 cy_center = array_to_vec3(scene->cylinder->coordinate);
-    t_vec3 cy_axis   = vec3_normalize(array_to_vec3(scene->cylinder->v_axis));
+    t_vec3 cy_axis = vec3_normalize(array_to_vec3(scene->cylinder->v_axis));
     double cy_radius = scene->cylinder->diameter / 2.0;
     double cy_height = scene->cylinder->height;
 
@@ -117,63 +117,68 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
   return hit;
 }
 
-int is_in_shadow(t_vec3 light_vec, const t_scene *scene, const t_hit_record *rec) {
-    t_ray shadow_ray;
-    t_hit_record shadow_rec;
-    double light_dist = vec3_length(light_vec);
-    t_vec3 light_dir = vec3_normalize(light_vec);
+int is_in_shadow(t_vec3 light_vec, const t_scene *scene,
+                 const t_hit_record *rec) {
+  t_ray shadow_ray;
+  t_hit_record shadow_rec;
+  double light_dist = vec3_length(light_vec);
+  t_vec3 light_dir = vec3_normalize(light_vec);
 
-    shadow_ray.orig = vec3_add(rec->p, vec3_scale(rec->normal, 0.001));
-    shadow_ray.dir = light_dir;
+  shadow_ray.orig = vec3_add(rec->p, vec3_scale(rec->normal, 0.001));
+  shadow_ray.dir = light_dir;
 
-    if (hit_anything(&shadow_ray, scene, &shadow_rec)) {
-        if (shadow_rec.t < light_dist)
-            return 1;
-    }
-    return 0;
+  if (hit_anything(&shadow_ray, scene, &shadow_rec)) {
+    if (shadow_rec.t < light_dist)
+      return 1;
+  }
+  return 0;
 }
 
-static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene) {
-    t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
-    t_vec3 light_vec = vec3_subtract(light_pos, rec->p);
-    t_vec3 light_dir = vec3_normalize(light_vec);
+static unsigned int apply_lighting(const t_hit_record *rec,
+                                   const t_scene *scene) {
+  t_vec3 light_pos = array_to_vec3(scene->light.coordinate);
+  t_vec3 light_vec = vec3_subtract(light_pos, rec->p);
+  t_vec3 light_dir = vec3_normalize(light_vec);
 
-    double obj_r = ((rec->color >> 16) & 0xFF) / 255.0;
-    double obj_g = ((rec->color >> 8) & 0xFF) / 255.0;
-    double obj_b = (rec->color & 0xFF) / 255.0;
+  double obj_r = ((rec->color >> 16) & 0xFF) / 255.0;
+  double obj_g = ((rec->color >> 8) & 0xFF) / 255.0;
+  double obj_b = (rec->color & 0xFF) / 255.0;
 
-    double amb_r_light = ((scene->ambient.color >> 16)) / 255.0;
-    double amb_g_light = ((scene->ambient.color >> 8)) / 255.0;
-    double amb_b_light = (scene->ambient.color) / 255.0;
+  double amb_r_light = ((scene->ambient.color >> 16)) / 255.0;
+  double amb_g_light = ((scene->ambient.color >> 8)) / 255.0;
+  double amb_b_light = (scene->ambient.color) / 255.0;
 
-    double final_r = obj_r * scene->ambient.range * amb_r_light;
-    double final_g = obj_g * scene->ambient.range * amb_g_light;
-    double final_b = obj_b * scene->ambient.range * amb_b_light;
+  double final_r = obj_r * scene->ambient.range * amb_r_light;
+  double final_g = obj_g * scene->ambient.range * amb_g_light;
+  double final_b = obj_b * scene->ambient.range * amb_b_light;
 
-    if (!is_in_shadow(light_vec, scene, rec)) {
-        double dot = vec3_dot(&rec->normal, &light_dir);
-        if (dot > 0) {
-            double diffuse_intensity = dot * scene->light.brightness;
-            
-            double l_r = ((scene->light.color >> 16) & 0xFF) / 255.0;
-            double l_g = ((scene->light.color >> 8) & 0xFF) / 255.0;
-            double l_b = (scene->light.color & 0xFF) / 255.0;
+  if (!is_in_shadow(light_vec, scene, rec)) {
+    double dot = vec3_dot(&rec->normal, &light_dir);
+    if (dot > 0) {
+      double diffuse_intensity = dot * scene->light.brightness;
 
-            final_r += obj_r * diffuse_intensity * l_r;
-            final_g += obj_g * diffuse_intensity * l_g;
-            final_b += obj_b * diffuse_intensity * l_b;
-        }
+      double l_r = ((scene->light.color >> 16) & 0xFF) / 255.0;
+      double l_g = ((scene->light.color >> 8) & 0xFF) / 255.0;
+      double l_b = (scene->light.color & 0xFF) / 255.0;
+
+      final_r += obj_r * diffuse_intensity * l_r;
+      final_g += obj_g * diffuse_intensity * l_g;
+      final_b += obj_b * diffuse_intensity * l_b;
     }
+  }
 
-    int r = (int)(final_r * 255);
-    int g = (int)(final_g * 255);
-    int b = (int)(final_b * 255);
+  int r = (int)(final_r * 255);
+  int g = (int)(final_g * 255);
+  int b = (int)(final_b * 255);
 
-    if (r > 255) r = 255;
-    if (g > 255) g = 255;
-    if (b > 255) b = 255;
+  if (r > 255)
+    r = 255;
+  if (g > 255)
+    g = 255;
+  if (b > 255)
+    b = 255;
 
-    return (r << 16 | g << 8 | b);
+  return (r << 16 | g << 8 | b);
 }
 
 // static unsigned int apply_ambient(unsigned int obj_color, const t_scene
@@ -187,7 +192,6 @@ static unsigned int apply_lighting(const t_hit_record *rec, const t_scene *scene
 
 //     return (r << 16 | g << 8 | b);
 // }
-
 
 unsigned int ray_color(const t_ray *r, const t_scene *scene) {
   t_hit_record rec;
