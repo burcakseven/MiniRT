@@ -54,23 +54,34 @@ t_root hit_plane(const point3 center, const point3 normal_vec,
   return root;
 }
 
-t_root hit_cylinder(point3 center, const point3 normal_vec, const t_ray ray,
+t_root hit_cylinder(point3 center, const point3 normal_vec, t_ray r,
                     const double radius,
                     const double height) // sınırsız silindir?
 {
   double a;
   double b;
   double c;
-  t_ray new_ray;
+  t_root root;
+  t_ray   local_ray;
 
-  center = transformed_ray(center, ray, 1).orig;
-  new_ray = transformed_ray(normal_vec, ray, 1);
-  if (center.z - new_ray.dir.z)
-    a = pow(new_ray.dir.x, 2) + pow(new_ray.dir.y, 2);
-  b = 2 * (new_ray.orig.x * new_ray.dir.x + new_ray.orig.y * new_ray.dir.y);
-  c = pow(new_ray.orig.x, 2) + pow(new_ray.orig.y, 2) - pow(radius, 2);
+  local_ray = transformed_ray(normal_vec, center, r, 1);
+  
+  if (local_ray.dir.z)
+    a = pow(local_ray.dir.x, 2) + pow(local_ray.dir.z, 2);
+  b = 2 * (local_ray.orig.x * local_ray.dir.x + local_ray.orig.z * local_ray.dir.z);
+  c = pow(local_ray.orig.x, 2) + pow(local_ray.orig.z, 2) - pow(radius, 2);
 
-  return (roots(a, b, discriminant(a, b, c)));
+  root = roots(a, b, discriminant(a, b, c));
+  double hit_y = local_ray.orig.y + root.root1 * local_ray.dir.y;
+
+  if (hit_y < -height / 2.0 || hit_y > height / 2.0)
+    {
+        hit_y = local_ray.orig.y + root.root2 * local_ray.dir.y;
+        if (hit_y < -height / 2.0 || hit_y > height / 2.0){
+          root.root_number = 0;
+            return (root);}
+    }
+  return (root);
 }
 
 // En yakın pozitif kökü döndürür; geçerli kök yoksa -1 döner

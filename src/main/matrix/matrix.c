@@ -62,8 +62,7 @@ float *init_matrix(point3 normal_vec, int inverse_flag) {
   temp = new (sizeof(float) * 9);
 
   float radZ = atan2(-normal_vec.x, normal_vec.y);
-  float shadow = sqrt(normal_vec.x * normal_vec.x + normal_vec.y * normal_vec.y);
-  float radX = atan2(-normal_vec.z, shadow);
+  float radX = atan2(normal_vec.z, normal_vec.y);
   float radY = 0;
   temp = transformationMatrix(radX, radY, radZ, matrix);
   if (inverse_flag == 1)

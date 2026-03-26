@@ -19,14 +19,17 @@ point3 ray_at(t_ray r, double t) {
   return result;
 }
 
-t_ray transformed_ray(point3 normal_vec, t_ray r, int inverse_flag) {
+t_ray transformed_ray(point3 normal_vec, t_vec3 center, t_ray r, int inverse_flag) {
   float *matrix;
   t_ray new_r;
 
+  new_r.orig = vec3_subtract(r.orig, center);
+  new_r.dir = r.dir;
+  
   matrix = init_matrix(normal_vec, inverse_flag);
-  new_r.dir = matrix_vector_multiply(matrix, r.dir);
+  new_r.dir = matrix_vector_multiply(matrix, new_r.dir);
+  new_r.orig = matrix_vector_multiply(matrix, new_r.orig);
   new_r.dir = vec3_normalize(new_r.dir);
-  new_r.orig = matrix_vector_multiply(matrix, r.orig);
   del(matrix);
   return new_r;
 }
@@ -35,6 +38,21 @@ t_vec3 normal_at_sphere(point3 center, point3 hit_point) {
   t_vec3 normal;
   normal = vec3_subtract(hit_point, center);
   return vec3_normalize(normal);
+}
+
+t_vec3 normal_at_cylinder(t_vec3 cy_center, t_vec3 cy_axis, t_vec3 p)
+{
+    t_vec3 v;
+    double m;
+    t_vec3 projection_p;
+    t_vec3 normal;
+  
+    v = vec3_subtract(p, cy_center);
+    m = vec3_dot(&v, &cy_axis);
+    projection_p = vec3_add(cy_center, vec3_scale(cy_axis, m));
+    normal = vec3_subtract(p, projection_p);
+
+    return (vec3_normalize(normal));
 }
 
 t_vec3 array_to_vec3(const float coord[3]) {
@@ -75,6 +93,24 @@ static int hit_anything(const t_ray *r, const t_scene *scene,
       rec->p = ray_at(*r, rec->t);
       rec->normal = vec3_normalize(array_to_vec3(scene->plane->v_normal));
       rec->color = scene->plane->color;
+      hit = 1;
+    }
+  }
+  if (scene->cylinder) {
+    double t;
+    t_vec3 cy_center = array_to_vec3(scene->cylinder->coordinate);
+    t_vec3 cy_axis   = vec3_normalize(array_to_vec3(scene->cylinder->v_axis));
+    double cy_radius = scene->cylinder->diameter / 2.0;
+    double cy_height = scene->cylinder->height;
+
+    root = hit_cylinder(cy_center, cy_axis, *r, cy_radius, cy_height);
+    t = closest_positive_root(root);
+    if (t > 0 && t < closest_so_far) {
+      closest_so_far = t;
+      rec->t = t;
+      rec->p = ray_at(*r, t);
+      rec->normal = normal_at_cylinder(cy_center, cy_axis, rec->p);
+      rec->color = scene->cylinder->color;
       hit = 1;
     }
   }
