@@ -61,7 +61,7 @@ ifeq ($(OS), Darwin)
 endif
 
 $(NAME): $(DEPENDENTS) $(OBJECTS)
-	$(CC) $(OSFLAG) $(OBJECTS) $(DEPENDENTS) -o $(NAME)
+	$(CC) $(OBJECTS) $(DEPENDENTS) $(OSFLAG) -o $(NAME)
 
 all: $(NAME)
 
