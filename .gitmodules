@@ -1,4 +1,0 @@
-[submodule "libs/libft"]
-	path = libs/libft
-	url = https://github.com/rasnesakam/42IstanbulCursus.git
-	branch = libft
